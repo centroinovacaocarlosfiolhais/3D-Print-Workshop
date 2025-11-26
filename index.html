@@ -1,0 +1,1740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Printing Workshop for Teachers</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .subtitle {
+            font-size: 0.9em;
+            margin-top: 10px;
+            opacity: 0.8;
+        }
+
+        nav {
+            background: #2c3e50;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav button {
+            background: none;
+            border: none;
+            color: white;
+            padding: 15px 25px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+
+        nav button:hover {
+            background: #34495e;
+        }
+
+        nav button.active {
+            background: #34495e;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        h3 {
+            color: #764ba2;
+            font-size: 1.5em;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        h4 {
+            color: #555;
+            font-size: 1.2em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .timeline {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .timeline-item {
+            padding: 15px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .timeline-item:last-child {
+            border-bottom: none;
+        }
+
+        .time {
+            font-weight: bold;
+            color: #667eea;
+            display: inline-block;
+            min-width: 80px;
+        }
+
+        .activity {
+            display: inline-block;
+            color: #555;
+        }
+
+        .duration {
+            float: right;
+            background: #667eea;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.9em;
+        }
+
+        .card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid #667eea;
+        }
+
+        .card-warning {
+            border-left-color: #f39c12;
+            background: #fef5e7;
+        }
+
+        .card-success {
+            border-left-color: #27ae60;
+            background: #e8f8f5;
+        }
+
+        .card-danger {
+            border-left-color: #e74c3c;
+            background: #fadbd8;
+        }
+
+        .card-info {
+            border-left-color: #3498db;
+            background: #ebf5fb;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .grid-item {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s;
+        }
+
+        .grid-item:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .grid-item h4 {
+            margin-top: 0;
+            color: #667eea;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        .checklist {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .checklist li {
+            padding: 10px;
+            margin: 5px 0;
+            background: #f8f9fa;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            padding-left: 40px;
+        }
+
+        .checklist li:before {
+            content: "☐";
+            position: absolute;
+            left: 12px;
+            font-size: 1.5em;
+            color: #667eea;
+        }
+
+        .checklist li.checked {
+            background: #d4edda;
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+
+        .checklist li.checked:before {
+            content: "☑";
+            color: #27ae60;
+        }
+
+        .checklist li:hover {
+            background: #e8f4f8;
+        }
+
+        code {
+            background: #2c3e50;
+            color: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        pre {
+            background: #2c3e50;
+            color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: bold;
+            margin: 5px 5px 5px 0;
+        }
+
+        .badge-primary { background: #667eea; color: white; }
+        .badge-success { background: #27ae60; color: white; }
+        .badge-warning { background: #f39c12; color: white; }
+        .badge-danger { background: #e74c3c; color: white; }
+        .badge-info { background: #3498db; color: white; }
+
+        .step-number {
+            display: inline-block;
+            width: 35px;
+            height: 35px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .step {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+
+        .tip {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .tip:before {
+            content: "💡 TIP: ";
+            font-weight: bold;
+            color: #856404;
+        }
+
+        .warning {
+            background: #fadbd8;
+            border-left: 5px solid #e74c3c;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .warning:before {
+            content: "⚠️ WARNING: ";
+            font-weight: bold;
+            color: #721c24;
+        }
+
+        .success {
+            background: #d4edda;
+            border-left: 5px solid #27ae60;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .success:before {
+            content: "✓ SUCCESS: ";
+            font-weight: bold;
+            color: #155724;
+        }
+
+        ul, ol {
+            margin: 15px 0;
+            padding-left: 30px;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        .button {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        .button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .button-secondary {
+            background: #95a5a6;
+        }
+
+        .button-secondary:hover {
+            background: #7f8c8d;
+        }
+
+        .print-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1em;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+
+        .print-button:hover {
+            background: #229954;
+            transform: scale(1.05);
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+                border-radius: 0;
+            }
+            
+            nav, .print-button {
+                display: none;
+            }
+            
+            .section {
+                display: block !important;
+                page-break-after: always;
+            }
+            
+            h2 {
+                page-break-after: avoid;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+            
+            nav button {
+                padding: 12px 15px;
+                font-size: 0.9em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .print-button {
+                bottom: 15px;
+                right: 15px;
+                padding: 12px 20px;
+            }
+        }
+
+        .keyboard-shortcuts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .shortcut {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .key {
+            background: #2c3e50;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+
+        .icon {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🖨️ 3D Printing Workshop for Teachers</h1>
+            <p>Introduction to 3D Modeling & Printing</p>
+            <p class="subtitle">Tinkercad & Onshape | 2-Hour Hands-On Session</p>
+        </header>
+
+        <nav>
+            <button onclick="showSection('overview')" class="active">📋 Overview</button>
+            <button onclick="showSection('basics')">🎓 Basics</button>
+            <button onclick="showSection('constraints')">⚙️ Constraints</button>
+            <button onclick="showSection('tinkercad')">🔧 Tinkercad</button>
+            <button onclick="showSection('exercise')">✏️ Exercise</button>
+            <button onclick="showSection('onshape')">💼 Onshape</button>
+            <button onclick="showSection('resources')">📚 Resources</button>
+            <button onclick="showSection('checklist')">✅ Checklist</button>
+        </nav>
+
+        <div class="content">
+            <!-- OVERVIEW SECTION -->
+            <div id="overview" class="section active">
+                <h2>Workshop Overview</h2>
+                
+                <div class="card card-info">
+                    <h3>Workshop Details</h3>
+                    <p><strong>Duration:</strong> 2 hours</p>
+                    <p><strong>Level:</strong> Beginner-friendly, no prior experience needed</p>
+                    <p><strong>Tools:</strong> Tinkercad (free, browser-based), Optional: Onshape</p>
+                    <p><strong>Output:</strong> Custom bookmark design ready to print (~20 min print time)</p>
+                </div>
+
+                <h3>📅 Workshop Timeline</h3>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <span class="time">0:00-0:15</span>
+                        <span class="activity">Introduction & 3D Printing Basics</span>
+                        <span class="duration">15 min</span>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="time">0:15-0:30</span>
+                        <span class="activity">Technology Constraints & Design Rules</span>
+                        <span class="duration">15 min</span>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="time">0:30-1:00</span>
+                        <span class="activity">Tinkercad Tutorial + Practice</span>
+                        <span class="duration">30 min</span>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="time">1:00-1:20</span>
+                        <span class="activity">Design Exercise: Custom Bookmark</span>
+                        <span class="duration">20 min</span>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="time">1:20-1:40</span>
+                        <span class="activity">Quick Onshape Demo (optional)</span>
+                        <span class="duration">20 min</span>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="time">1:40-2:00</span>
+                        <span class="activity">Printing Demo & Q&A</span>
+                        <span class="duration">20 min</span>
+                    </div>
+                </div>
+
+                <h3>🎯 Learning Objectives</h3>
+                <div class="grid">
+                    <div class="grid-item">
+                        <h4>Basic Skills</h4>
+                        <ul>
+                            <li>Navigate Tinkercad interface</li>
+                            <li>Create 3D models from basic shapes</li>
+                            <li>Add and customize text</li>
+                            <li>Export STL files</li>
+                        </ul>
+                    </div>
+                    <div class="grid-item">
+                        <h4>Design Understanding</h4>
+                        <ul>
+                            <li>Understand printability constraints</li>
+                            <li>Apply design rules (thickness, overhangs)</li>
+                            <li>Consider print orientation</li>
+                            <li>Optimize for print time</li>
+                        </ul>
+                    </div>
+                    <div class="grid-item">
+                        <h4>Classroom Application</h4>
+                        <ul>
+                            <li>Identify teaching opportunities</li>
+                            <li>Design simple learning aids</li>
+                            <li>Plan student projects</li>
+                            <li>Understand costs and time</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card card-success">
+                    <h3>✨ What You'll Create Today</h3>
+                    <p><strong>Project: Custom Bookmark Clip</strong></p>
+                    <p>A personalized bookmark that clips onto book pages, featuring your name or initials. Perfect first project because it's:</p>
+                    <ul>
+                        <li>Simple enough for beginners</li>
+                        <li>Prints in ~20 minutes (see results today!)</li>
+                        <li>Practical and usable</li>
+                        <li>Easy to customize and personalize</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- BASICS SECTION -->
+            <div id="basics" class="section">
+                <h2>3D Printing Basics</h2>
+
+                <h3>What is 3D Printing?</h3>
+                <div class="card">
+                    <p><strong>Additive Manufacturing:</strong> Building objects layer by layer from the ground up, unlike traditional manufacturing that cuts away material.</p>
+                    <p><strong>Common Technology - FDM:</strong> Fused Deposition Modeling uses melted plastic extruded through a nozzle, like a hot glue gun that draws in 3D space.</p>
+                </div>
+
+                <h3>🧵 Common Materials</h3>
+                <div class="grid">
+                    <div class="grid-item">
+                        <h4>PLA (Most Common)</h4>
+                        <span class="badge badge-success">Beginner Friendly</span>
+                        <ul>
+                            <li>Biodegradable corn-based plastic</li>
+                            <li>Easy to print, low warping</li>
+                            <li>Prints at 190-220°C</li>
+                            <li>Great for classroom use</li>
+                        </ul>
+                    </div>
+                    <div class="grid-item">
+                        <h4>ABS</h4>
+                        <span class="badge badge-warning">Advanced</span>
+                        <ul>
+                            <li>Stronger and more flexible</li>
+                            <li>Requires heated bed</li>
+                            <li>Can warp easily</li>
+                            <li>Fumes need ventilation</li>
+                        </ul>
+                    </div>
+                    <div class="grid-item">
+                        <h4>PETG</h4>
+                        <span class="badge badge-info">Intermediate</span>
+                        <ul>
+                            <li>Strong and durable</li>
+                            <li>Weather resistant</li>
+                            <li>Food-safe options available</li>
+                            <li>Slightly harder than PLA</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>🏫 Real Classroom Applications</h3>
+                <div class="grid">
+                    <div class="grid-item">
+                        <h4>📖 Teaching Aids</h4>
+                        <ul>
+                            <li>Custom letters and numbers</li>
+                            <li>Geometric shapes for math</li>
+                            <li>Tactile learning tools</li>
+                            <li>Braille letters</li>
+                        </ul>
+                    </div>
+                    <div class="grid-item">
+                        <h4>🔬 Science Models</h4>
+                        <ul>
+                            <li>Cell structures</li>
+                            <li>Molecule models</li>
+                            <li>Topographic maps</li>
+                            <li>Anatomical parts</li>
+                        </ul>
+                    </div>
+                    <div class="grid-item">
+                        <h4>🛠️ Practical Items</h4>
+                        <ul>
+                            <li>Replacement parts (clips, handles)</li>
+                            <li>Cable organizers</li>
+                            <li>Name tags and labels</li>
+                            <li>Custom stamps</li>
+                        </ul>
+                    </div>
+                    <div class="grid-item">
+                        <h4>🎨 Student Projects</h4>
+                        <ul>
+                            <li>Design challenges</li>
+                            <li>Personalized art</li>
+                            <li>STEM competitions</li>
+                            <li>Gift-making activities</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="tip">
+                    Start with small, simple objects. A 3cm tall figurine takes ~20 minutes. A 10cm sculpture might take 3+ hours!
+                </div>
+            </div>
+
+            <!-- CONSTRAINTS SECTION -->
+            <div id="constraints" class="section">
+                <h2>Technology Constraints & Design Rules</h2>
+
+                <div class="card card-warning">
+                    <h3>⚠️ Critical Rules</h3>
+                    <p>Following these rules means the difference between successful prints and failures:</p>
+                </div>
+
+                <h3>✓ DO These Things</h3>
+                <table>
+                    <tr>
+                        <th>Rule</th>
+                        <th>Why It Matters</th>
+                        <th>Recommended Value</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Minimum wall thickness</strong></td>
+                        <td>Walls too thin will break or not print</td>
+                        <td><span class="highlight">2-3mm minimum</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Design with flat base</strong></td>
+                        <td>Ensures good bed adhesion</td>
+                        <td>Largest surface on bottom</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Consider overhangs</strong></td>
+                        <td>Gravity affects printing!</td>
+                        <td><span class="highlight">Under 45° is safe</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Check print orientation</strong></td>
+                        <td>Affects strength and time</td>
+                        <td>Minimize overhangs</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Keep first layer simple</strong></td>
+                        <td>Prevents warping and lifting</td>
+                        <td>Wide, flat contact area</td>
+                    </tr>
+                </table>
+
+                <h3>✗ DON'T Do These Things</h3>
+                <table>
+                    <tr>
+                        <th>Avoid</th>
+                        <th>Problem</th>
+                        <th>Solution</th>
+                    </tr>
+                    <tr>
+                        <td>Parts thinner than 1.5mm</td>
+                        <td>Will be fragile or won't print</td>
+                        <td>Make walls at least 2mm</td>
+                    </tr>
+                    <tr>
+                        <td>Floating elements</td>
+                        <td>Nothing to print on = spaghetti</td>
+                        <td>Add supports or redesign</td>
+                    </tr>
+                    <tr>
+                        <td>Tiny details under 3mm</td>
+                        <td>Printer can't resolve them</td>
+                        <td>Make details larger</td>
+                    </tr>
+                    <tr>
+                        <td>Ignoring overhang angles</td>
+                        <td>Drooping, sagging prints</td>
+                        <td>Stay under 45° or add supports</td>
+                    </tr>
+                </table>
+
+                <h3>📐 The Overhang Rule</h3>
+                <div class="grid">
+                    <div class="grid-item card-success">
+                        <h4>0-45° ✓ Safe</h4>
+                        <p>No supports needed. Prints beautifully.</p>
+                        <p><strong>Example:</strong> Gentle slopes, pyramids</p>
+                    </div>
+                    <div class="grid-item card-warning">
+                        <h4>45-70° ⚠ Risky</h4>
+                        <p>May need supports depending on printer.</p>
+                        <p><strong>Example:</strong> Steep roofs, angled walls</p>
+                    </div>
+                    <div class="grid-item card-danger">
+                        <h4>70-90° ✗ Impossible</h4>
+                        <p>Definitely needs supports or redesign.</p>
+                        <p><strong>Example:</strong> Horizontal bridges, overhangs</p>
+                    </div>
+                </div>
+
+                <h3>⏱️ Print Time Factors</h3>
+                <div class="card">
+                    <p><strong>What affects print time:</strong></p>
+                    <ul>
+                        <li><strong>Size:</strong> Bigger objects = more layers = longer time (exponential!)</li>
+                        <li><strong>Infill percentage:</strong> 10-20% is usually enough for classroom items</li>
+                        <li><strong>Layer height:</strong> 0.2mm is standard (lower = more detail = slower)</li>
+                        <li><strong>Print speed:</strong> 50mm/s is typical (faster = lower quality)</li>
+                    </ul>
+                    <div class="tip">
+                        Rule of thumb: A 3-5cm object at normal settings prints in ~20 minutes
+                    </div>
+                </div>
+
+                <h3>📄 File Requirements</h3>
+                <div class="grid">
+                    <div class="grid-item">
+                        <h4>File Format</h4>
+                        <p>Export as <code>.STL</code> or <code>.OBJ</code></p>
+                        <p>Most common and universally accepted</p>
+                    </div>
+                    <div class="grid-item">
+                        <h4>Model Quality</h4>
+                        <p>Must be "manifold" (watertight)</p>
+                        <p>No holes in the mesh, closed surfaces</p>
+                    </div>
+                    <div class="grid-item">
+                        <h4>Scale</h4>
+                        <p>Check dimensions in millimeters</p>
+                        <p>Verify size makes sense in real world!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TINKERCAD SECTION -->
+            <div id="tinkercad" class="section">
+                <h2>Tinkercad Tutorial</h2>
+
+                <div class="card card-info">
+                    <h3>Getting Started</h3>
+                    <ol>
+                        <li>Go to <a href="https://tinkercad.com" target="_blank"><strong>tinkercad.com</strong></a></li>
+                        <li>Sign in with Google or create a free account</li>
+                        <li>Click <strong>"Create new design"</strong></li>
+                        <li>You're ready to start building!</li>
+                    </ol>
+                </div>
+
+                <h3>🎨 Essential Shapes</h3>
+                <div class="grid">
+                    <div class="grid-item">
+                        <h4>Basic Solids</h4>
+                        <ul>
+                            <li><strong>Box</strong> - Rectangular shapes</li>
+                            <li><strong>Cylinder</strong> - Round pillars, tubes</li>
+                            <li><strong>Sphere</strong> - Balls, rounded corners</li>
+                            <li><strong>Cone</strong> - Points, tapered shapes</li>
+                        </ul>
+                    </div>
+                    <div class="grid-item">
+                        <h4>Special Tools</h4>
+                        <ul>
+                            <li><strong>Hole versions</strong> - For cutting/subtracting</li>
+                            <li><strong>Text</strong> - Add labels and names</li>
+                            <li><strong>Rounded shapes</strong> - Smooth edges</li>
+                            <li><strong>Generators</strong> - Complex patterns</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>⌨️ Keyboard Shortcuts</h3>
+                <div class="keyboard-shortcuts">
+                    <div class="shortcut">
+                        <span>Copy</span>
+                        <span class="key">Ctrl+C</span>
+                    </div>
+                    <div class="shortcut">
+                        <span>Paste</span>
+                        <span class="key">Ctrl+V</span>
+                    </div>
+                    <div class="shortcut">
+                        <span>Duplicate</span>
+                        <span class="key">Ctrl+D</span>
+                    </div>
+                    <div class="shortcut">
+                        <span>Group</span>
+                        <span class="key">Ctrl+G</span>
+                    </div>
+                    <div class="shortcut">
+                        <span>Ungroup</span>
+                        <span class="key">Ctrl+Shift+G</span>
+                    </div>
+                    <div class="shortcut">
+                        <span>Delete</span>
+                        <span class="key">Delete</span>
+                    </div>
+                    <div class="shortcut">
+                        <span>Drop to plane</span>
+                        <span class="key">D</span>
+                    </div>
+                    <div class="shortcut">
+                        <span>Align</span>
+                        <span class="key">L</span>
+                    </div>
+                    <div class="shortcut">
+                        <span>Undo</span>
+                        <span class="key">Ctrl+Z</span>
+                    </div>
+                </div>
+
+                <h3>🖱️ Essential Controls</h3>
+                <table>
+                    <tr>
+                        <th>Action</th>
+                        <th>How To</th>
+                        <th>Tip</th>
+                    </tr>
+                    <tr>
+                        <td>Select object</td>
+                        <td>Click on it</td>
+                        <td>Selected objects show orange outline</td>
+                    </tr>
+                    <tr>
+                        <td>Move object</td>
+                        <td>Click and drag</td>
+                        <td>Use arrow keys for precision</td>
+                    </tr>
+                    <tr>
+                        <td>Resize</td>
+                        <td>Drag corner white squares</td>
+                        <td>Hold Shift to maintain proportions</td>
+                    </tr>
+                    <tr>
+                        <td>Rotate</td>
+                        <td>Drag curved arrows</td>
+                        <td>Hold Shift for 22.5° increments</td>
+                    </tr>
+                    <tr>
+                        <td>Change height</td>
+                        <td>Drag black cone up/down</td>
+                        <td>Or type exact value in inspector</td>
+                    </tr>
+                </table>
+
+                <h3>🏃 Quick Practice Exercise</h3>
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <strong>Make a Simple Keychain Tag</strong>
+                    <p>This 5-minute exercise teaches all basic operations:</p>
+                    
+                    <ol>
+                        <li>Add a <strong>Box</strong> and resize to <code>20mm × 40mm × 3mm</code></li>
+                        <li>Add a <strong>Cylinder</strong>, make it <code>5mm diameter × 3mm height</code></li>
+                        <li>Position the cylinder at the top of the box</li>
+                        <li>Change the cylinder to a <strong>Hole</strong> (click "Solid" → select "Hole")</li>
+                        <li>Select both objects and click <strong>Group</strong> to cut the hole</li>
+                        <li>Add <strong>Text</strong>, type your name, resize to fit</li>
+                        <li>Make text <code>2mm deep</code>, position on the tag</li>
+                        <li><strong>Group everything</strong> together</li>
+                        <li>Click <strong>Export</strong> → <strong>STL</strong></li>
+                    </ol>
+                    
+                    <div class="success">
+                        Congratulations! You just created your first 3D model ready for printing!
+                    </div>
+                </div>
+
+                <div class="tip">
+                    If you get lost or objects disappear, click the <strong>View Cube</strong> home button to reset your view!
+                </div>
+            </div>
+
+            <!-- EXERCISE SECTION -->
+            <div id="exercise" class="section">
+                <h2>Main Exercise: Custom Bookmark Clip</h2>
+
+                <div class="card card-success">
+                    <h3>📖 Project Overview</h3>
+                    <p><strong>What:</strong> Personalized bookmark that clips onto book pages</p>
+                    <p><strong>Size:</strong> 30mm wide × 60mm tall × 2-3mm thick</p>
+                    <p><strong>Print Time:</strong> ~20 minutes</p>
+                    <p><strong>Difficulty:</strong> <span class="badge badge-success">Beginner</span></p>
+                </div>
+
+                <h3>📋 Step-by-Step Instructions</h3>
+
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <h4>Create the Base Body (5 minutes)</h4>
+                    <ol>
+                        <li>Open Tinkercad → <strong>Create New Design</strong></li>
+                        <li>Drag a <strong>Box</strong> onto the workplane</li>
+                        <li>Click the box and set dimensions:
+                            <ul>
+                                <li><strong>Length:</strong> 30mm</li>
+                                <li><strong>Width:</strong> 60mm</li>
+                                <li><strong>Height:</strong> 2mm</li>
+                            </ul>
+                        </li>
+                        <li><em>Optional:</em> Round corners by placing small cylinder holes at corners</li>
+                    </ol>
+                    <div class="tip">
+                        Straight corners work perfectly fine - skip rounding if it feels complicated!
+                    </div>
+                </div>
+
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <h4>Add the Clip Feature (5 minutes)</h4>
+                    <ol>
+                        <li>Drag another <strong>Box</strong> onto workplane</li>
+                        <li>Set dimensions:
+                            <ul>
+                                <li><strong>Length:</strong> 25mm (slightly narrower)</li>
+                                <li><strong>Width:</strong> 8mm</li>
+                                <li><strong>Height:</strong> 2mm</li>
+                            </ul>
+                        </li>
+                        <li>Move this bar to the <strong>top</strong> of your bookmark</li>
+                        <li>Make it <strong>overlap</strong> the main body by 3-4mm</li>
+                        <li>Center it horizontally (use <strong>Align tool</strong> - press <code>L</code>)</li>
+                        <li>Select both pieces and click <strong>Group</strong></li>
+                    </ol>
+                    <div class="success">
+                        The overlapping piece creates a flexible clip that grips the page!
+                    </div>
+                </div>
+
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <h4>Add Your Name (5 minutes)</h4>
+                    <ol>
+                        <li>Click <strong>Text</strong> in the shapes panel (right side)</li>
+                        <li>Drag text onto your bookmark</li>
+                        <li>Click to edit and type your <strong>name or initials</strong></li>
+                        <li>Adjust settings:
+                            <ul>
+                                <li><strong>Height:</strong> 1-1.5mm (depth)</li>
+                                <li><strong>Font:</strong> Choose any (simple works best)</li>
+                            </ul>
+                        </li>
+                        <li>Resize so letters are about <strong>8-10mm tall</strong></li>
+                        <li>Center the text on bookmark (use <code>L</code> to align)</li>
+                        <li>Press <code>D</code> to drop text onto surface</li>
+                    </ol>
+                    
+                    <p><strong>Choose your style:</strong></p>
+                    <ul>
+                        <li><strong>Raised text:</strong> Leave as "Solid", then group with bookmark</li>
+                        <li><strong>Engraved text:</strong> Change to "Hole" to cut into bookmark, then group</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <span class="step-number">4</span>
+                    <h4>Add Decoration (Optional - 5 minutes)</h4>
+                    <p>Personalize your bookmark with:</p>
+                    <ul>
+                        <li><strong>Simple shapes:</strong> Add a small star, heart, or subject icon</li>
+                        <li><strong>Math:</strong> Add π symbol or numbers</li>
+                        <li><strong>Science:</strong> Small beaker (cylinder + cone)</li>
+                        <li><strong>Reading:</strong> Tiny book stack</li>
+                        <li><strong>Decorative holes:</strong> Small cylinders (3-4mm) as pattern</li>
+                    </ul>
+                    <div class="warning">
+                        Keep decorations simple! Too many details = longer print time and harder to print.
+                    </div>
+                </div>
+
+                <div class="step">
+                    <span class="step-number">5</span>
+                    <h4>Final Checks (3 minutes)</h4>
+                    <p><strong>Verify your design:</strong></p>
+                    <ul class="checklist">
+                        <li>Dimensions are roughly 30mm × 60mm × 2-4mm</li>
+                        <li>Text is readable (big enough?)</li>
+                        <li>Clip feature is clear at the top</li>
+                        <li>No floating parts or disconnected pieces</li>
+                        <li>Nothing thinner than 2mm</li>
+                    </ul>
+                    <p><strong>Rename project:</strong> Click "Tinker 1" at top → Rename to "Bookmark_YourName"</p>
+                </div>
+
+                <div class="step">
+                    <span class="step-number">6</span>
+                    <h4>Export for Printing (2 minutes)</h4>
+                    <ol>
+                        <li>Click <strong>Export</strong> button (top right)</li>
+                        <li>Select <strong>.STL</strong> format</li>
+                        <li>File downloads as "YourProjectName.stl"</li>
+                        <li>Save to your USB drive or cloud storage</li>
+                    </ol>
+                    <div class="success">
+                        Your file is now ready to load into slicer software and print! 🎉
+                    </div>
+                </div>
+
+                <h3>🖨️ Printing Settings</h3>
+                <div class="card">
+                    <pre><code>Recommended Settings:
+├─ Layer Height: 0.2mm
+├─ Infill: 15%
+├─ Print Speed: 50mm/s
+├─ Supports: Not needed
+├─ Bed Adhesion: Brim
+├─ Print Time: ~15-20 minutes
+└─ Filament Used: ~2g</code></pre>
+                    <p><strong>Orientation:</strong> Lay bookmark flat on the bed (clip feature prints without supports)</p>
+                </div>
+
+                <h3>🚨 Troubleshooting</h3>
+                <table>
+                    <tr>
+                        <th>Problem</th>
+                        <th>Solution</th>
+                    </tr>
+                    <tr>
+                        <td>Text too small to read</td>
+                        <td>Make letters at least 8mm tall, use bold fonts</td>
+                    </tr>
+                    <tr>
+                        <td>Clip bar too loose/tight</td>
+                        <td>Adjust overlap (3-5mm) in your design</td>
+                    </tr>
+                    <tr>
+                        <td>Print time too long</td>
+                        <td>Reduce infill to 10% or make slightly smaller</td>
+                    </tr>
+                    <tr>
+                        <td>Text not cutting through</td>
+                        <td>Increase text height to 1.5mm if using hole mode</td>
+                    </tr>
+                </table>
+
+                <h3>🎨 Variation Ideas</h3>
+                <div class="grid">
+                    <div class="grid-item">
+                        <h4>Level 2: Decorative</h4>
+                        <p>Add large cylinder hole in bottom corner</p>
+                    </div>
+                    <div class="grid-item">
+                        <h4>Level 3: Functional</h4>
+                        <p>Add small notches on side (page counter/ruler)</p>
+                    </div>
+                    <div class="grid-item">
+                        <h4>Level 4: Advanced</h4>
+                        <p>Add second clip at bottom for double-sided grip</p>
+                    </div>
+                    <div class="grid-item">
+                        <h4>Level 5: Custom Shape</h4>
+                        <p>Make body a heart, arrow, or other custom shape</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ONSHAPE SECTION -->
+            <div id="onshape" class="section">
+                <h2>Onshape Quick Demo</h2>
+
+                <div class="card card-info">
+                    <h3>Why Onshape?</h3>
+                    <ul>
+                        <li>More powerful than Tinkercad - professional-grade CAD</li>
+                        <li>Similar to SolidWorks, Fusion 360</li>
+                        <li>Cloud-based, free for education</li>
+                        <li>Better for precise measurements and engineering</li>
+                        <li>Parametric design (edit history, make changes easily)</li>
+                    </ul>
+                </div>
+
+                <h3>🆚 Tinkercad vs Onshape</h3>
+                <table>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Tinkercad</th>
+                        <th>Onshape</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Learning Curve</strong></td>
+                        <td>Very easy (30 min)</td>
+                        <td>Moderate (3-5 hours)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Design Approach</strong></td>
+                        <td>Building blocks</td>
+                        <td>Sketch-based</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Best For</strong></td>
+                        <td>Quick concepts, beginners, young students</td>
+                        <td>Precise parts, technical designs, measurements</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Precision</strong></td>
+                        <td>Good enough</td>
+                        <td>Extremely precise</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Age Level</strong></td>
+                        <td>Ages 8+</td>
+                        <td>Ages 13+, adults</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Price</strong></td>
+                        <td>Free</td>
+                        <td>Free for education</td>
+                    </tr>
+                </table>
+
+                <h3>🚀 Quick Onshape Workflow</h3>
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <h4>Sketch</h4>
+                    <p>Draw 2D profile/outline of your object</p>
+                    <ul>
+                        <li>Use lines, circles, rectangles</li>
+                        <li>Add dimensions (exact measurements)</li>
+                        <li>Add constraints (perpendicular, parallel)</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <h4>Extrude</h4>
+                    <p>Pull the 2D sketch into 3D space</p>
+                    <ul>
+                        <li>Specify exact depth</li>
+                        <li>Can add/remove material</li>
+                        <li>Create complex shapes</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <h4>Features</h4>
+                    <p>Add details and modifications</p>
+                    <ul>
+                        <li>Fillets (rounded edges)</li>
+                        <li>Chamfers (angled edges)</li>
+                        <li>Holes, patterns, text</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <span class="step-number">4</span>
+                    <h4>Export</h4>
+                    <p>Save as STL for 3D printing</p>
+                </div>
+
+                <h3>📚 Learning Path</h3>
+                <div class="grid">
+                    <div class="grid-item">
+                        <h4>Start Here</h4>
+                        <span class="badge badge-success">Week 1</span>
+                        <p><strong>Tinkercad</strong> - Build confidence with 3D concepts</p>
+                    </div>
+                    <div class="grid-item">
+                        <h4>Practice</h4>
+                        <span class="badge badge-info">Weeks 2-4</span>
+                        <p>Create 10+ simple objects in Tinkercad</p>
+                    </div>
+                    <div class="grid-item">
+                        <h4>Level Up</h4>
+                        <span class="badge badge-warning">Month 2</span>
+                        <p><strong>Onshape</strong> - When you need precision</p>
+                    </div>
+                    <div class="grid-item">
+                        <h4>Master</h4>
+                        <span class="badge badge-primary">Months 3-6</span>
+                        <p>Design complex projects with confidence</p>
+                    </div>
+                </div>
+
+                <div class="tip">
+                    Don't rush to Onshape! Master Tinkercad first. Most classroom projects work perfectly in Tinkercad.
+                </div>
+
+                <h3>🔗 Onshape Resources</h3>
+                <div class="card">
+                    <ul>
+                        <li><strong>Website:</strong> <a href="https://onshape.com/education" target="_blank">onshape.com/education</a></li>
+                        <li><strong>Learning Center:</strong> <a href="https://learn.onshape.com" target="_blank">learn.onshape.com</a></li>
+                        <li><strong>Free for Teachers:</strong> Sign up with your school email</li>
+                        <li><strong>Tutorials:</strong> Built-in guided lessons</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- RESOURCES SECTION -->
+            <div id="resources" class="section">
+                <h2>Resources & Next Steps</h2>
+
+                <h3>🆓 Free Software</h3>
+                <div class="grid">
+                    <div class="grid-item">
+                        <h4>Tinkercad</h4>
+                        <p><a href="https://tinkercad.com" target="_blank">tinkercad.com</a></p>
+                        <p>Browser-based 3D design for beginners</p>
+                        <span class="badge badge-success">Easiest</span>
+                    </div>
+                    <div class="grid-item">
+                        <h4>Onshape</h4>
+                        <p><a href="https://onshape.com/education" target="_blank">onshape.com/education</a></p>
+                        <p>Professional CAD, free for educators</p>
+                        <span class="badge badge-info">Advanced</span>
+                    </div>
+                    <div class="grid-item">
+                        <h4>Fusion 360</h4>
+                        <p>Free for students and educators</p>
+                        <p>Industry-standard CAD software</p>
+                        <span class="badge badge-warning">Professional</span>
+                    </div>
+                    <div class="grid-item">
+                        <h4>FreeCAD</h4>
+                        <p>Open-source CAD software</p>
+                        <p>Completely free, powerful features</p>
+                        <span class="badge badge-primary">Open Source</span>
+                    </div>
+                </div>
+
+                <h3>🎨 Free 3D Model Libraries</h3>
+                <div class="grid">
+                    <div class="grid-item">
+                        <h4>Thingiverse</h4>
+                        <p><a href="https://thingiverse.com" target="_blank">thingiverse.com</a></p>
+                        <p>Largest free 3D model repository</p>
+                    </div>
+                    <div class="grid-item">
+                        <h4>Printables</h4>
+                        <p><a href="https://printables.com" target="_blank">printables.com</a></p>
+                        <p>Curated models from Prusa Research</p>
+                    </div>
+                    <div class="grid-item">
+                        <h4>MyMiniFactory</h4>
+                        <p><a href="https://myminifactory.com" target="_blank">myminifactory.com</a></p>
+                        <p>Quality-tested printable designs</p>
+                    </div>
+                    <div class="grid-item">
+                        <h4>Cults3D</h4>
+                        <p>Free and premium models</p>
+                        <p>Designer marketplace</p>
+                    </div>
+                </div>
+
+                <h3>📖 Learning Resources</h3>
+                <div class="card">
+                    <h4>Online Tutorials</h4>
+                    <ul>
+                        <li><strong>Tinkercad Learn:</strong> <a href="https://tinkercad.com/learn" target="_blank">tinkercad.com/learn</a> - Official lessons</li>
+                        <li><strong>Onshape Learning:</strong> <a href="https://learn.onshape.com" target="_blank">learn.onshape.com</a> - Guided pathways</li>
+                        <li><strong>YouTube - Teaching Tech:</strong> Excellent beginner 3D printing channel</li>
+                        <li><strong>YouTube - 3D Printing Nerd:</strong> Reviews and tutorials</li>
+                        <li><strong>YouTube - Maker's Muse:</strong> Design tips and tricks</li>
+                    </ul>
+                </div>
+
+                <h3>💡 Classroom Project Ideas</h3>
+                <div class="grid">
+                    <div class="grid-item">
+                        <h4>📐 Mathematics</h4>
+                        <ul>
+                            <li>Geometric shapes and solids</li>
+                            <li>3D graphs of functions</li>
+                            <li>Fraction visualizations</li>
+                            <li>Platonic solids</li>
+                            <li>Measurement tools</li>
+                        </ul>
+                    </div>
+                    <div class="grid-item">
+                        <h4>🔬 Science</h4>
+                        <ul>
+                            <li>Cell models</li>
+                            <li>Molecule structures</li>
+                            <li>Topographic maps</li>
+                            <li>Simple machines</li>
+                            <li>Anatomical models</li>
+                        </ul>
+                    </div>
+                    <div class="grid-item">
+                        <h4>🗺️ Geography & History</h4>
+                        <ul>
+                            <li>Historical landmarks</li>
+                            <li>Terrain models</li>
+                            <li>Ancient artifacts replicas</li>
+                            <li>Archaeological finds</li>
+                            <li>Building reconstructions</li>
+                        </ul>
+                    </div>
+                    <div class="grid-item">
+                        <h4>🎨 Arts & Language</h4>
+                        <ul>
+                            <li>Sculptures and art pieces</li>
+                            <li>Custom stamps</li>
+                            <li>Braille learning tools</li>
+                            <li>Alphabet letters</li>
+                            <li>Stencils and templates</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>💰 Cost Information</h3>
+                <div class="card card-info">
+                    <h4>What does 3D printing cost?</h4>
+                    <table>
+                        <tr>
+                            <th>Item</th>
+                            <th>Typical Cost</th>
+                        </tr>
+                        <tr>
+                            <td>Small object (like our bookmark)</td>
+                            <td>€0.10 - €0.30</td>
+                        </tr>
+                        <tr>
+                            <td>Medium object (10cm figurine)</td>
+                            <td>€1.00 - €3.00</td>
+                        </tr>
+                        <tr>
+                            <td>PLA Filament (1kg spool)</td>
+                            <td>€15 - €25</td>
+                        </tr>
+                        <tr>
+                            <td>Entry-level 3D Printer</td>
+                            <td>€150 - €300</td>
+                        </tr>
+                        <tr>
+                            <td>Mid-range 3D Printer</td>
+                            <td>€300 - €600</td>
+                        </tr>
+                    </table>
+                    <p><strong>Bottom line:</strong> After initial printer investment, individual prints cost pennies!</p>
+                </div>
+
+                <h3>❓ Frequently Asked Questions</h3>
+                <div class="grid">
+                    <div class="grid-item">
+                        <h4>How long to learn?</h4>
+                        <p><strong>Tinkercad:</strong> 2-3 hours for basics</p>
+                        <p><strong>Onshape:</strong> 10-20 hours for proficiency</p>
+                        <p><strong>Print troubleshooting:</strong> Ongoing learning!</p>
+                    </div>
+                    <div class="grid-item">
+                        <h4>What age can students start?</h4>
+                        <p><strong>Tinkercad:</strong> Ages 8+ with supervision</p>
+                        <p><strong>Physical printing:</strong> Ages 12+ (heat safety)</p>
+                        <p><strong>Onshape:</strong> Ages 13+ or mature students</p>
+                    </div>
+                    <div class="grid-item">
+                        <h4>Is it safe for classrooms?</h4>
+                        <p><strong>PLA printing:</strong> Yes, low fumes</p>
+                        <p><strong>ABS printing:</strong> Needs ventilation</p>
+                        <p><strong>Hot parts:</strong> Adult supervision required</p>
+                    </div>
+                    <div class="grid-item">
+                        <h4>How much maintenance?</h4>
+                        <p><strong>Weekly:</strong> Clean bed, check filament</p>
+                        <p><strong>Monthly:</strong> Lubricate rods, check belts</p>
+                        <p><strong>As needed:</strong> Replace nozzle, level bed</p>
+                    </div>
+                </div>
+
+                <h3>👥 Join the Community</h3>
+                <div class="card">
+                    <ul>
+                        <li><strong>Reddit:</strong> r/3Dprinting - Massive helpful community</li>
+                        <li><strong>Facebook:</strong> Search "3D Printing for Teachers"</li>
+                        <li><strong>Forums:</strong> Prusa Forums, Ultimaker Community</li>
+                        <li><strong>Discord:</strong> Many printer brands have servers</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- CHECKLIST SECTION -->
+            <div id="checklist" class="section">
+                <h2>Workshop Preparation Checklist</h2>
+
+                <div class="card card-warning">
+                    <h3>⚡ Quick Start Version</h3>
+                    <p>Minimum requirements to run this workshop:</p>
+                    <ul class="checklist">
+                        <li>Computer lab with internet access</li>
+                        <li>1 working 3D printer with filament</li>
+                        <li>Sample prints to show</li>
+                        <li>Printed handouts (Quick Reference)</li>
+                        <li>Projector to demonstrate Tinkercad</li>
+                    </ul>
+                </div>
+
+                <h3>📅 One Week Before</h3>
+                <h4>Technical Setup</h4>
+                <ul class="checklist">
+                    <li>Book computer lab with internet access</li>
+                    <li>Verify all computers can access tinkercad.com</li>
+                    <li>Check browsers are updated (Chrome/Firefox/Edge)</li>
+                    <li>Install slicer software on demo computer (Cura or PrusaSlicer)</li>
+                    <li>Create test Tinkercad account</li>
+                </ul>
+
+                <h4>3D Printer Preparation</h4>
+                <ul class="checklist">
+                    <li>Clean and calibrate 3D printer</li>
+                    <li>Level the print bed</li>
+                    <li>Test print a bookmark to verify settings</li>
+                    <li>Load fresh filament (bright color recommended)</li>
+                    <li>Prepare backup filament spool</li>
+                    <li>Clean nozzle and check for clogs</li>
+                </ul>
+
+                <h4>Materials Gathering</h4>
+                <ul class="checklist">
+                    <li>Print 3-5 sample bookmarks (different designs)</li>
+                    <li>Print examples of failed prints (for learning)</li>
+                    <li>Collect other 3D printed examples</li>
+                    <li>Prepare filament samples (different colors/types)</li>
+                </ul>
+
+                <h3>📅 2-3 Days Before</h3>
+                <h4>Document Preparation</h4>
+                <ul class="checklist">
+                    <li>Print Quick Reference handouts (one per participant)</li>
+                    <li>Print Bookmark Exercise Steps</li>
+                    <li>Print extra copies (20% buffer)</li>
+                    <li>Create sign-in sheet</li>
+                </ul>
+
+                <h4>Presentation Prep</h4>
+                <ul class="checklist">
+                    <li>Test screen sharing/projection</li>
+                    <li>Bookmark tutorial videos (backup)</li>
+                    <li>Prepare demo STL files on USB drive</li>
+                    <li>Create slicer preset "Workshop Quick Print"</li>
+                </ul>
+
+                <h3>📅 Day Before</h3>
+                <ul class="checklist">
+                    <li>Visit room to plan layout</li>
+                    <li>Verify projector works</li>
+                    <li>Check power outlets for printer</li>
+                    <li>Test WiFi signal strength</li>
+                    <li>Charge backup devices</li>
+                    <li>Pack extension cords if needed</li>
+                    <li>Know IT support contact</li>
+                </ul>
+
+                <h3>📅 Day of Workshop - Arrive 30 Min Early</h3>
+                <h4>Room Setup (20 minutes)</h4>
+                <ul class="checklist">
+                    <li>Arrange tables for screen visibility</li>
+                    <li>Set up and test projector</li>
+                    <li>Set up 3D printer on stable surface</li>
+                    <li>Power on and preheat printer</li>
+                    <li>Display sample prints</li>
+                    <li>Lay out handouts at each seat</li>
+                    <li>Test internet on several computers</li>
+                </ul>
+
+                <h4>Tech Check (10 minutes)</h4>
+                <ul class="checklist">
+                    <li>Open Tinkercad and project it</li>
+                    <li>Test zoom level (can back row see?)</li>
+                    <li>Open slicer with example file</li>
+                    <li>Test printer connection</li>
+                    <li>Have backup USB drives ready</li>
+                </ul>
+
+                <h4>Final Touches</h4>
+                <ul class="checklist">
+                    <li>Write WiFi password on board</li>
+                    <li>Write timeline on board</li>
+                    <li>Place door sign</li>
+                    <li>Have water for yourself</li>
+                    <li>Phone on silent</li>
+                </ul>
+
+                <h3>📦 Materials to Bring</h3>
+                <h4>Essential Equipment</h4>
+                <ul class="checklist">
+                    <li>3D Printer + power cable</li>
+                    <li>Filament (loaded + backup)</li>
+                    <li>Build plate scraper</li>
+                    <li>Glue stick (bed adhesion)</li>
+                    <li>Allen keys/printer tools</li>
+                    <li>Laptop with slicer installed</li>
+                    <li>USB drives with example files</li>
+                    <li>HDMI/display adapter</li>
+                </ul>
+
+                <h4>Printed Materials</h4>
+                <ul class="checklist">
+                    <li>Workshop plan (your reference)</li>
+                    <li>Quick Reference handouts</li>
+                    <li>Exercise Steps handouts</li>
+                    <li>Sign-in sheet</li>
+                    <li>Blank paper</li>
+                    <li>Pens/pencils</li>
+                </ul>
+
+                <h4>Physical Examples</h4>
+                <ul class="checklist">
+                    <li>Sample 3D prints (variety)</li>
+                    <li>Sample bookmarks (3-5)</li>
+                    <li>Failed print examples</li>
+                    <li>Filament samples</li>
+                </ul>
+
+                <h3>🎯 Success Metrics</h3>
+                <p><strong>Workshop successful if participants can:</strong></p>
+                <ul class="checklist">
+                    <li>Log into Tinkercad and navigate interface</li>
+                    <li>Create a basic 3D model from shapes</li>
+                    <li>Add and customize text</li>
+                    <li>Export an STL file</li>
+                    <li>Understand basic printability rules</li>
+                    <li>Identify one classroom application</li>
+                </ul>
+
+                <div class="success">
+                    Bonus: Several participants export working designs, at least one prints during workshop, participants excited to try in classroom!
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p><strong>3D Printing Workshop for Teachers</strong></p>
+            <p>Prepared with ❤️ for educators exploring the future of making</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">Share your printed bookmarks on social media! #TeacherMaker #3DPrinting</p>
+        </footer>
+    </div>
+
+    <button class="print-button" onclick="window.print()">🖨️ Print Guide</button>
+
+    <script>
+        // Navigation functionality
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected section
+            const selectedSection = document.getElementById(sectionId);
+            selectedSection.classList.add('active');
+            
+            // Update nav buttons
+            const buttons = document.querySelectorAll('nav button');
+            buttons.forEach(button => {
+                button.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // Checklist functionality
+        document.addEventListener('click', function(e) {
+            if (e.target.matches('.checklist li')) {
+                e.target.classList.toggle('checked');
+            }
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            const sections = ['overview', 'basics', 'constraints', 'tinkercad', 'exercise', 'onshape', 'resources', 'checklist'];
+            const currentSection = document.querySelector('.section.active').id;
+            const currentIndex = sections.indexOf(currentSection);
+            
+            if (e.key === 'ArrowRight' && currentIndex < sections.length - 1) {
+                const nextSection = sections[currentIndex + 1];
+                document.getElementById(nextSection).scrollIntoView();
+                showSection(nextSection);
+            } else if (e.key === 'ArrowLeft' && currentIndex > 0) {
+                const prevSection = sections[currentIndex - 1];
+                document.getElementById(prevSection).scrollIntoView();
+                showSection(prevSection);
+            }
+        });
+
+        // Save checklist state to localStorage
+        function saveChecklistState() {
+            const checklistItems = document.querySelectorAll('.checklist li');
+            const state = {};
+            checklistItems.forEach((item, index) => {
+                state[index] = item.classList.contains('checked');
+            });
+            localStorage.setItem('workshopChecklist', JSON.stringify(state));
+        }
+
+        // Load checklist state from localStorage
+        function loadChecklistState() {
+            const saved = localStorage.getItem('workshopChecklist');
+            if (saved) {
+                const state = JSON.parse(saved);
+                const checklistItems = document.querySelectorAll('.checklist li');
+                checklistItems.forEach((item, index) => {
+                    if (state[index]) {
+                        item.classList.add('checked');
+                    }
+                });
+            }
+        }
+
+        // Auto-save checklist
+        document.addEventListener('click', function(e) {
+            if (e.target.matches('.checklist li')) {
+                setTimeout(saveChecklistState, 100);
+            }
+        });
+
+        // Load checklist on page load
+        window.addEventListener('load', loadChecklistState);
+    </script>
+</body>
+</html>
