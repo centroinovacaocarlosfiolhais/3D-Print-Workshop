@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2h Workshop - 3D Printing: Tinkercad and Slicer</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; line-height: 1.6; color: #2d3748; background: #f7fafc; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px 20px; text-align: center; }
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .duration-badge { display: inline-block; background: rgba(255,255,255,0.2); padding: 10px 20px; border-radius: 25px; font-size: 1.1em; margin-top: 10px; }
+        .container { max-width: 1000px; margin: -30px auto 40px; background: white; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); padding: 40px; }
+        .back-link { display: inline-block; color: #667eea; text-decoration: none; margin-bottom: 20px; font-weight: 600; }
+        .back-link:hover { text-decoration: underline; }
+        .section { margin-bottom: 40px; }
+        .section-title { color: #667eea; font-size: 1.8em; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 3px solid #667eea; }
+        .subsection { margin: 25px 0; }
+        .subsection-title { color: #2d3748; font-size: 1.3em; margin-bottom: 15px; font-weight: 600; }
+        .step-list { list-style: none; counter-reset: step-counter; }
+        .step-list li { counter-increment: step-counter; margin-bottom: 15px; padding-left: 40px; position: relative; }
+        .step-list li:before { content: counter(step-counter); position: absolute; left: 0; top: 0; background: #667eea; color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9em; }
+        .info-box { background: #ebf4ff; border-left: 4px solid #4299e1; padding: 20px; margin: 20px 0; border-radius: 5px; }
+        .tip-box { background: #faf089; border-left: 4px solid #ecc94b; padding: 20px; margin: 20px 0; border-radius: 5px; }
+        .warning-box { background: #fed7d7; border-left: 4px solid #fc8181; padding: 20px; margin: 20px 0; border-radius: 5px; }
+        .tip-title, .info-title, .warning-title { font-weight: 600; margin-bottom: 10px; }
+        .checklist { list-style: none; }
+        .checklist li { padding: 10px; margin: 8px 0; background: #f7fafc; border-radius: 5px; padding-left: 40px; position: relative; }
+        .checklist li:before { content: "☐"; position: absolute; left: 12px; font-size: 1.3em; color: #667eea; }
+        ul { margin-left: 20px; margin-top: 10px; }
+        ul li { margin: 8px 0; }
+        .timeline { background: #f7fafc; padding: 20px; border-radius: 10px; margin: 20px 0; }
+        .timeline-item { margin: 10px 0; padding: 10px; border-left: 3px solid #667eea; padding-left: 15px; }
+        .timeline-time { font-weight: 600; color: #667eea; }
+        @media print { .back-link { display: none; } .container { box-shadow: none; margin-top: 0; } }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🖨️ 3D Printing Workshop</h1>
+        <p>From Modeling to Print Preparation</p>
+        <div class="duration-badge">⏱️ Duration: 2 Hours</div>
+    </div>
+    
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to selection</a>
+        
+        <div class="section">
+            <h2 class="section-title">📋 Workshop Overview</h2>
+            <p>In this 2-hour workshop, you'll master the complete process from 3D modeling to print preparation. You'll create an object in Tinkercad and learn to prepare it in Slicer software to ensure a successful print.</p>
+            
+            <div class="info-box">
+                <div class="info-title">🎯 Learning Objectives</div>
+                <ul>
+                    <li>Create personalized 3D objects in Tinkercad</li>
+                    <li>Understand the print preparation process</li>
+                    <li>Know essential Slicer settings</li>
+                    <li>Identify when to use supports and adhesion</li>
+                    <li>Understand print quality impact</li>
+                </ul>
+            </div>
+            
+            <div class="timeline">
+                <div class="timeline-item"><span class="timeline-time">0-10 min:</span> Setup and introduction</div>
+                <div class="timeline-item"><span class="timeline-time">10-20 min:</span> Basic 3D printing concepts</div>
+                <div class="timeline-item"><span class="timeline-time">20-65 min:</span> Modeling in Tinkercad</div>
+                <div class="timeline-item"><span class="timeline-time">65-110 min:</span> Slicer preparation</div>
+                <div class="timeline-item"><span class="timeline-time">110-120 min:</span> Conclusion and Q&A</div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title">⚙️ Setup (10 min)</h2>
+            <div class="subsection">
+                <h3 class="subsection-title">Instructor Checklist</h3>
+                <ul class="checklist">
+                    <li>Computers with Tinkercad (online) and Slicer installed</li>
+                    <li>Sample STL files for demonstration</li>
+                    <li>Projector for real-time demonstration</li>
+                    <li>Physical print examples (with and without supports)</li>
+                    <li>Examples of different print qualities</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title">🎨 Introduction to 3D Printing (10 min)</h2>
+            <div class="info-box">
+                <div class="info-title">💡 Complete 3D Printing Process</div>
+                <ol>
+                    <li><strong>Modeling:</strong> Create the 3D design (Tinkercad, Onshape, etc.)</li>
+                    <li><strong>Export:</strong> Save as STL file</li>
+                    <li><strong>Slicing:</strong> Convert model into layers (Slicer)</li>
+                    <li><strong>Printing:</strong> Send to 3D printer</li>
+                    <li><strong>Post-processing:</strong> Remove supports and finishing</li>
+                </ol>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title">🛠️ PART 1: Modeling in Tinkercad (45 min)</h2>
+            <div class="subsection">
+                <h3 class="subsection-title">Initial Setup (5 min)</h3>
+                <ol class="step-list">
+                    <li>Go to <strong>tinkercad.com</strong></li>
+                    <li>Create account or log in</li>
+                    <li>Click "Create new design"</li>
+                </ol>
+            </div>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">Basic Navigation (5 min)</h3>
+                <ul>
+                    <li><strong>Rotate:</strong> Right mouse button + drag</li>
+                    <li><strong>Zoom:</strong> Mouse wheel</li>
+                    <li><strong>Pan:</strong> Middle button pressed + drag</li>
+                    <li><strong>Views:</strong> Use view cube in corner</li>
+                </ul>
+            </div>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">Exercise: Create a Phone Stand (35 min)</h3>
+                
+                <div class="tip-box">
+                    <div class="tip-title">💡 Why a Phone Stand?</div>
+                    This project is ideal because:
+                    <ul>
+                        <li>It's a functional and useful object</li>
+                        <li>Allows exploring angles and supports concepts</li>
+                        <li>Has interesting design challenges</li>
+                        <li>Introduces thinking about print orientation</li>
+                    </ul>
+                </div>
+                
+                <ol class="step-list">
+                    <li><strong>Create the base</strong>
+                        <ul>
+                            <li>Drag a "Box" to workspace</li>
+                            <li>Adjust to create flat rectangular base</li>
+                            <li>Give sufficient thickness for stability</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Create the back wall</strong>
+                        <ul>
+                            <li>Add another "Box" for the back wall</li>
+                            <li>Position vertically at edge of base</li>
+                            <li>Adjust height to accommodate a phone</li>
+                            <li>Use rotation tool to create support angle (about 70-80°)</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Add phone slot</strong>
+                        <ul>
+                            <li>Drag a "Box" and transform to "Hole"</li>
+                            <li>Position and adjust to create slot where phone rests</li>
+                            <li>Adjust depth and width</li>
+                            <li>Group with base</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Create cable opening</strong>
+                        <ul>
+                            <li>Use "Cylinder" or "Box" as hole</li>
+                            <li>Position at bottom to allow charging</li>
+                            <li>Adjust size appropriate for USB cable</li>
+                            <li>Group with rest of model</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Personalize with text or symbols</strong>
+                        <ul>
+                            <li>Add text with name or decorative icons</li>
+                            <li>Try raised or recessed relief</li>
+                            <li>Position on visible surfaces</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Final verification</strong>
+                        <ul>
+                            <li>Rotate object and check all angles</li>
+                            <li>Confirm all parts are properly grouped</li>
+                            <li>Check minimum thicknesses</li>
+                            <li>Export as STL</li>
+                        </ul>
+                    </li>
+                </ol>
+                
+                <div class="warning-box">
+                    <div class="warning-title">⚠️ Important Points</div>
+                    <ul>
+                        <li>Keep walls at least 2-3mm thick</li>
+                        <li>Verify angle isn't too steep (may need supports)</li>
+                        <li>Confirm base is wide enough for stability</li>
+                        <li>Mentally test if real phone would fit</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title">⚙️ PART 2: Slicer Preparation (45 min)</h2>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">What is a Slicer? (5 min)</h3>
+                <p>The Slicer is software that converts your 3D model into instructions the printer can follow. It "slices" the model into hundreds or thousands of thin layers and generates the path the printer nozzle should follow.</p>
+                
+                <div class="info-box">
+                    <div class="info-title">📦 Common Slicer Software</div>
+                    <ul>
+                        <li><strong>UltiMaker Cura:</strong> Free, easy to use, very popular</li>
+                        <li><strong>PrusaSlicer:</strong> Free, excellent for Prusa printers</li>
+                        <li><strong>Bambu Studio:</strong> For Bambu Lab printers</li>
+                    </ul>
+                    <p><em>In this workshop we'll use [indicate which is installed]</em></p>
+                </div>
+            </div>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">Load the Model (5 min)</h3>
+                <ol class="step-list">
+                    <li>Open Slicer on computer</li>
+                    <li>Click "Open file" or drag STL file</li>
+                    <li>Model appears on virtual print platform</li>
+                    <li>Observe initial model orientation</li>
+                </ol>
+            </div>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">Essential Slicer Concepts (30 min)</h3>
+                
+                <h4 style="color: #667eea; margin-top: 25px; margin-bottom: 15px;">1. Supports - 10 min</h4>
+                
+                <div class="info-box">
+                    <div class="info-title">🏗️ What are Supports?</div>
+                    <p>Supports are temporary structures the printer creates to hold parts that "float in air". They're like construction scaffolding - needed during printing but removed afterwards.</p>
+                </div>
+                
+                <p><strong>When to use supports:</strong></p>
+                <ul>
+                    <li><strong>Angles greater than 45°:</strong> If a part has inclination over 45°, it usually needs support</li>
+                    <li><strong>Overhangs:</strong> Parts projecting without anything underneath</li>
+                    <li><strong>Very long bridges:</strong> Horizontal distances without support</li>
+                </ul>
+                
+                <p><strong>Practical demonstration:</strong></p>
+                <ol class="step-list">
+                    <li>Show phone stand model</li>
+                    <li>Enable support visualization in Slicer</li>
+                    <li>Explain where they appear and why</li>
+                    <li>Rotate model to show different orientations</li>
+                    <li>Demonstrate how changing orientation can eliminate supports</li>
+                </ol>
+                
+                <div class="tip-box">
+                    <div class="tip-title">💡 Design Tip</div>
+                    Whenever possible, design your objects to minimize or eliminate supports:
+                    <ul>
+                        <li>Think about orientation from the start</li>
+                        <li>Use angles up to 45° when possible</li>
+                        <li>Consider splitting complex objects into parts</li>
+                    </ul>
+                </div>
+                
+                <h4 style="color: #667eea; margin-top: 25px; margin-bottom: 15px;">2. Bed Adhesion - 10 min</h4>
+                
+                <div class="info-box">
+                    <div class="info-title">📐 What is Bed Adhesion?</div>
+                    <p>These are extra structures on the first layer that help the object adhere well to the print platform, preventing it from coming loose or moving during printing.</p>
+                </div>
+                
+                <p><strong>Adhesion types:</strong></p>
+                <ul>
+                    <li><strong>Brim:</strong> Extra border around first layer
+                        <ul>
+                            <li>Increases contact area</li>
+                            <li>Easy to remove</li>
+                            <li>Ideal for most objects</li>
+                        </ul>
+                    </li>
+                    <li><strong>Raft:</strong> Complete platform under object
+                        <ul>
+                            <li>Maximum adhesion</li>
+                            <li>Useful for objects with small base</li>
+                            <li>Uses more material</li>
+                            <li>Leaves mark on bottom surface</li>
+                        </ul>
+                    </li>
+                    <li><strong>Skirt:</strong> Line around (doesn't touch object)
+                        <ul>
+                            <li>Only to prime the nozzle</li>
+                            <li>Doesn't help with adhesion</li>
+                        </ul>
+                    </li>
+                </ul>
+                
+                <p><strong>Practical demonstration:</strong></p>
+                <ol class="step-list">
+                    <li>Show each adhesion type in Slicer</li>
+                    <li>Explain when to use each</li>
+                    <li>Show physical examples of parts printed with each type</li>
+                    <li>Demonstrate how to remove brim vs raft</li>
+                </ol>
+                
+                <h4 style="color: #667eea; margin-top: 25px; margin-bottom: 15px;">3. Print Quality (Layer Height) - 10 min</h4>
+                
+                <div class="info-box">
+                    <div class="info-title">📏 What is Layer Height?</div>
+                    <p>It's the thickness of each material layer. Thinner layers = more detail but more time. Thicker layers = faster but less detail.</p>
+                </div>
+                
+                <p><strong>Common profiles:</strong></p>
+                <ul>
+                    <li><strong>0.1mm - High quality:</strong>
+                        <ul>
+                            <li>Very smooth surfaces</li>
+                            <li>Fine details visible</li>
+                            <li>Time: Can take 2-3x longer</li>
+                            <li>Use for: Figures, decorative objects</li>
+                        </ul>
+                    </li>
+                    <li><strong>0.2mm - Normal quality:</strong>
+                        <ul>
+                            <li>Ideal balance</li>
+                            <li>Good appearance and reasonable time</li>
+                            <li>Use for: Most projects</li>
+                        </ul>
+                    </li>
+                    <li><strong>0.3mm - Draft:</strong>
+                        <ul>
+                            <li>Fast printing</li>
+                            <li>Visible layers</li>
+                            <li>Use for: Prototypes, functional parts where appearance doesn't matter</li>
+                        </ul>
+                    </li>
+                </ul>
+                
+                <p><strong>Practical demonstration:</strong></p>
+                <ol class="step-list">
+                    <li>Show same object with different layer heights in Slicer</li>
+                    <li>Compare estimated print time</li>
+                    <li>Show physical examples of same part in different qualities</li>
+                    <li>Let participants feel the difference in surfaces</li>
+                </ol>
+                
+                <div class="tip-box">
+                    <div class="tip-title">⚖️ Choosing the Right Quality</div>
+                    <p>Question to ask: "Is this decorative or functional?"</p>
+                    <ul>
+                        <li><strong>Decorative:</strong> Worth waiting for high quality</li>
+                        <li><strong>Functional:</strong> Normal or draft quality saves time</li>
+                        <li><strong>Prototypes:</strong> Always use draft first to test</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">Prepare for Printing (5 min)</h3>
+                <ol class="step-list">
+                    <li>Select printer profile</li>
+                    <li>Choose material (PLA is most common)</li>
+                    <li>Set print quality (layer height)</li>
+                    <li>Enable supports if needed</li>
+                    <li>Choose adhesion type (usually brim)</li>
+                    <li>Click "Slice" to process</li>
+                    <li>Check estimated time and material amount</li>
+                    <li>View layer by layer (optional)</li>
+                    <li>Export G-code file to SD card or send to printer</li>
+                </ol>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title">🎓 Conclusion and Next Steps (10 min)</h2>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">Recap</h3>
+                <p><strong>Part 1 - Tinkercad:</strong></p>
+                <ul>
+                    <li>Created a functional 3D object</li>
+                    <li>Used solids and holes</li>
+                    <li>Added personalization</li>
+                </ul>
+                
+                <p><strong>Part 2 - Slicer:</strong></p>
+                <ul>
+                    <li>Understood when to use supports</li>
+                    <li>Learned about bed adhesion</li>
+                    <li>Saw print quality impact</li>
+                </ul>
+            </div>
+            
+            <div class="warning-box">
+                <div class="warning-title">⚠️ Pre-Print Checklist</div>
+                <ul class="checklist">
+                    <li>Is model well positioned on platform?</li>
+                    <li>Are supports enabled if needed?</li>
+                    <li>Did I choose appropriate adhesion type?</li>
+                    <li>Is print quality appropriate for purpose?</li>
+                    <li>Are time and material acceptable?</li>
+                </ul>
+            </div>
+            
+            <div class="tip-box">
+                <div class="tip-title">🚀 To Continue</div>
+                <ul>
+                    <li>Try printing your project</li>
+                    <li>Test different orientations in Slicer</li>
+                    <li>Compare prints with different qualities</li>
+                    <li>Join 4h workshop for advanced Onshape projects</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title">📚 Resources</h2>
+            <ul>
+                <li><strong>Modeling:</strong> tinkercad.com</li>
+                <li><strong>Free Slicer:</strong> UltiMaker Cura (ultimaker.com/software)</li>
+                <li><strong>Community:</strong> Thingiverse, Printables for free models</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

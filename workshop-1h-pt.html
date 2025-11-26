@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workshop 1h - Impressão 3D com Tinkercad</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #2d3748;
+            background: #f7fafc;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .duration-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            margin-top: 10px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: -30px auto 40px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            padding: 40px;
+        }
+        
+        .back-link {
+            display: inline-block;
+            color: #667eea;
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        .subsection {
+            margin: 25px 0;
+        }
+        
+        .subsection-title {
+            color: #2d3748;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .step-list {
+            list-style: none;
+            counter-reset: step-counter;
+        }
+        
+        .step-list li {
+            counter-increment: step-counter;
+            margin-bottom: 15px;
+            padding-left: 40px;
+            position: relative;
+        }
+        
+        .step-list li:before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #667eea;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+        
+        .info-box {
+            background: #ebf4ff;
+            border-left: 4px solid #4299e1;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .tip-box {
+            background: #faf089;
+            border-left: 4px solid #ecc94b;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .tip-title, .info-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .checklist {
+            list-style: none;
+        }
+        
+        .checklist li {
+            padding: 10px;
+            margin: 8px 0;
+            background: #f7fafc;
+            border-radius: 5px;
+            padding-left: 40px;
+            position: relative;
+        }
+        
+        .checklist li:before {
+            content: "☐";
+            position: absolute;
+            left: 12px;
+            font-size: 1.3em;
+            color: #667eea;
+        }
+        
+        ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+        
+        ul li {
+            margin: 8px 0;
+        }
+        
+        @media print {
+            .back-link { display: none; }
+            .container { box-shadow: none; margin-top: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🖨️ Workshop de Impressão 3D</h1>
+        <p>Modelação 3D com Tinkercad</p>
+        <div class="duration-badge">⏱️ Duração: 1 Hora</div>
+    </div>
+    
+    <div class="container">
+        <a href="index.html" class="back-link">← Voltar à seleção</a>
+        
+        <div class="section">
+            <h2 class="section-title">📋 Visão Geral do Workshop</h2>
+            <p>Neste workshop de 1 hora, vais aprender os conceitos básicos de modelação 3D usando o Tinkercad, uma ferramenta online gratuita e intuitiva. Vais criar o teu próprio objeto personalizado pronto para impressão 3D.</p>
+            
+            <div class="info-box">
+                <div class="info-title">🎯 Objetivos de Aprendizagem</div>
+                <ul>
+                    <li>Compreender os conceitos básicos de modelação 3D</li>
+                    <li>Usar sólidos e orifícios no Tinkercad</li>
+                    <li>Adicionar texto e detalhes personalizados</li>
+                    <li>Exportar ficheiros para impressão 3D</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title">⚙️ Preparação (5 min)</h2>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">Checklist do Formador</h3>
+                <ul class="checklist">
+                    <li>Computadores ligados com acesso à internet</li>
+                    <li>Contas Tinkercad criadas ou preparadas para criar</li>
+                    <li>Projetor/ecrã para demonstração</li>
+                    <li>Exemplos de objetos impressos em 3D</li>
+                </ul>
+            </div>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">Preparação dos Participantes</h3>
+                <ol class="step-list">
+                    <li>Aceder a <strong>tinkercad.com</strong></li>
+                    <li>Criar conta ou fazer login</li>
+                    <li>Clicar em "Criar novo design"</li>
+                </ol>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title">🎨 Introdução à Impressão 3D (10 min)</h2>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">Conceitos Básicos</h3>
+                <p><strong>O que é impressão 3D?</strong></p>
+                <p>A impressão 3D constrói objetos camada por camada, como se estivesses a empilhar folhas muito finas de material até formar um objeto sólido.</p>
+                
+                <div class="info-box">
+                    <div class="info-title">💡 Princípios Importantes para Design 3D</div>
+                    <ul>
+                        <li><strong>Espessura:</strong> Todas as partes devem ter espessura suficiente (mínimo 2-3mm)</li>
+                        <li><strong>Base:</strong> O objeto precisa de uma base estável para não tombar</li>
+                        <li><strong>Apoios:</strong> Partes suspensas no ar precisam de estruturas de suporte</li>
+                        <li><strong>Simplicidade:</strong> Começar simples e adicionar complexidade gradualmente</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">Demonstração Rápida</h3>
+                <p>Mostrar exemplos físicos de impressões e explicar:</p>
+                <ul>
+                    <li>Como se veem as camadas</li>
+                    <li>Porque alguns objetos precisam de suportes</li>
+                    <li>Exemplos de bons e maus designs</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title">🛠️ Exercício Prático: Criar um Porta-Chaves (40 min)</h2>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">Interface do Tinkercad (5 min)</h3>
+                <p><strong>Navegação básica:</strong></p>
+                <ul>
+                    <li><strong>Rodar vista:</strong> Botão direito do rato + arrastar</li>
+                    <li><strong>Zoom:</strong> Roda do rato</li>
+                    <li><strong>Mover vista:</strong> Roda do rato pressionada + arrastar</li>
+                    <li><strong>Vista de cima:</strong> Clicar no cubo no canto superior esquerdo</li>
+                </ul>
+            </div>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">Passo a Passo: Construir o Porta-Chaves (30 min)</h3>
+                
+                <div class="tip-box">
+                    <div class="tip-title">💡 Dica do Formador</div>
+                    Demonstra cada passo no projetor e depois dá 2-3 minutos para os participantes replicarem antes de avançar para o próximo passo.
+                </div>
+                
+                <ol class="step-list">
+                    <li><strong>Criar a base</strong>
+                        <ul>
+                            <li>Arrastar uma forma "Caixa" do painel lateral para a área de trabalho</li>
+                            <li>Clicar na forma para selecionar</li>
+                            <li>Usar as pegas brancas nos cantos para ajustar o tamanho (tornar achatado como um cartão)</li>
+                            <li>Ajustar a altura para criar uma base fina mas resistente</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Fazer o orifício para o porta-chaves</strong>
+                        <ul>
+                            <li>Arrastar um "Cilindro" para a área de trabalho</li>
+                            <li>No painel de propriedades à direita, mudar de "Sólido" para "Orifício"</li>
+                            <li>Ajustar o tamanho do cilindro para criar um orifício apropriado</li>
+                            <li>Posicionar o cilindro numa extremidade da base</li>
+                            <li>Usar as setas de altura para garantir que atravessa toda a espessura</li>
+                            <li>Selecionar ambas as formas (Ctrl+A ou arrastar uma caixa à volta) e clicar em "Agrupar"</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Adicionar texto personalizado</strong>
+                        <ul>
+                            <li>Clicar em "Texto" no painel lateral</li>
+                            <li>Arrastar o texto para cima da base</li>
+                            <li>Clicar duas vezes no texto para editar (escrever nome ou palavra)</li>
+                            <li>Ajustar o tamanho do texto para caber bem na base</li>
+                            <li>Decidir se quer o texto em relevo (sólido) ou gravado (orifício)</li>
+                            <li>Ajustar a altura para criar profundidade suficiente</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Personalizar com formas decorativas</strong>
+                        <ul>
+                            <li>Escolher formas do painel (estrelas, corações, símbolos, etc.)</li>
+                            <li>Arrastar para a base</li>
+                            <li>Decidir se quer em alto-relevo (sólido) ou baixo-relevo (orifício)</li>
+                            <li>Ajustar tamanho e posição</li>
+                            <li>Experimentar rodar as formas usando a ferramenta de rotação</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Finalizar e verificar</strong>
+                        <ul>
+                            <li>Selecionar todas as peças finais (Ctrl+A)</li>
+                            <li>Clicar em "Agrupar" para unir tudo num único objeto</li>
+                            <li>Rodar o objeto para verificar de todos os ângulos</li>
+                            <li>Confirmar que o orifício atravessa completamente</li>
+                            <li>Verificar que todas as partes têm espessura adequada</li>
+                        </ul>
+                    </li>
+                </ol>
+                
+                <div class="info-box">
+                    <div class="info-title">🎯 Pontos de Verificação</div>
+                    <p>Durante o exercício, circular pela sala e verificar:</p>
+                    <ul>
+                        <li>Todos conseguem navegar na interface?</li>
+                        <li>O orifício está a funcionar corretamente?</li>
+                        <li>O texto está legível e bem posicionado?</li>
+                        <li>As formas estão bem agrupadas?</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title">💾 Exportar para Impressão (3 min)</h2>
+            
+            <ol class="step-list">
+                <li>Clicar em "Exportar" no canto superior direito</li>
+                <li>Selecionar formato <strong>.STL</strong> (formato padrão para impressão 3D)</li>
+                <li>Guardar o ficheiro no computador</li>
+                <li>Dar um nome descritivo ao ficheiro (ex: "porta-chaves-nome.stl")</li>
+            </ol>
+            
+            <div class="info-box">
+                <div class="info-title">📁 Sobre o Ficheiro STL</div>
+                <p>STL (STereoLithography) é o formato universal para impressão 3D. Ele guarda a superfície do teu objeto como uma malha de triângulos que a impressora consegue interpretar.</p>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title">🎓 Conclusão e Próximos Passos (2 min)</h2>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">Recapitulação</h3>
+                <ul>
+                    <li>Criámos formas 3D básicas</li>
+                    <li>Usámos orifícios para subtrair material</li>
+                    <li>Adicionámos texto personalizado</li>
+                    <li>Aprendemos sobre alto e baixo relevo</li>
+                    <li>Exportámos um ficheiro pronto para impressão</li>
+                </ul>
+            </div>
+            
+            <div class="tip-box">
+                <div class="tip-title">🚀 Para Continuar a Aprender</div>
+                <ul>
+                    <li>Experimenta formas mais complexas no Tinkercad</li>
+                    <li>Explora a biblioteca de designs da comunidade</li>
+                    <li>Tenta criar objetos funcionais (suportes, organizadores, etc.)</li>
+                    <li>Participa em workshops de 2h ou 4h para aprender sobre impressão e projetos avançados</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title">📚 Recursos Úteis</h2>
+            <ul>
+                <li><strong>Tinkercad:</strong> tinkercad.com</li>
+                <li><strong>Tutoriais:</strong> Tinkercad Learning Center</li>
+                <li><strong>Comunidade:</strong> Tinkercad Gallery para inspiração</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

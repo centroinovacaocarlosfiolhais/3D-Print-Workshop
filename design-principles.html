@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Printing Design Principles / Princípios de Design para Impressão 3D</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #2d3748;
+            background: #f7fafc;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.8em;
+            margin-bottom: 15px;
+        }
+        
+        .header p {
+            font-size: 1.3em;
+            opacity: 0.95;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: -40px auto 40px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            padding: 50px;
+        }
+        
+        .intro {
+            background: #ebf4ff;
+            border-left: 4px solid #4299e1;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-radius: 8px;
+        }
+        
+        .intro h2 {
+            color: #2c5282;
+            margin-bottom: 15px;
+        }
+        
+        .category {
+            margin-bottom: 60px;
+        }
+        
+        .category-title {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 4px solid #667eea;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .principle {
+            margin-bottom: 50px;
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 30px;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+        
+        .principle:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.1);
+        }
+        
+        .principle-header {
+            display: flex;
+            align-items: start;
+            gap: 30px;
+            margin-bottom: 25px;
+        }
+        
+        .principle-image {
+            flex-shrink: 0;
+        }
+        
+        .principle-image img {
+            width: 200px;
+            height: 200px;
+            object-fit: contain;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid #e2e8f0;
+        }
+        
+        .principle-content {
+            flex-grow: 1;
+        }
+        
+        .principle-title {
+            font-size: 1.6em;
+            color: #2d3748;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .principle-subtitle {
+            color: #718096;
+            font-size: 1.1em;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+        
+        .principle-text {
+            color: #4a5568;
+            line-height: 1.8;
+        }
+        
+        .rule-box {
+            background: #faf089;
+            border-left: 4px solid #ecc94b;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+        
+        .rule-title {
+            font-weight: 600;
+            color: #744210;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .tip-box {
+            background: #c6f6d5;
+            border-left: 4px solid #48bb78;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+        
+        .tip-title {
+            font-weight: 600;
+            color: #22543d;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .warning-box {
+            background: #fed7d7;
+            border-left: 4px solid #fc8181;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+        
+        .warning-title {
+            font-weight: 600;
+            color: #742a2a;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .back-link {
+            display: inline-block;
+            color: #667eea;
+            text-decoration: none;
+            margin-bottom: 30px;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        .lang-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            cursor: pointer;
+            z-index: 1000;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .lang-toggle:hover {
+            background: #667eea;
+            color: white;
+        }
+        
+        .lang-pt { display: block; }
+        .lang-en { display: none; }
+        
+        body.lang-en .lang-pt { display: none; }
+        body.lang-en .lang-en { display: block; }
+        
+        @media (max-width: 768px) {
+            .principle-header {
+                flex-direction: column;
+            }
+            
+            .principle-image img {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .container {
+                padding: 30px 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .category-title {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="lang-toggle" onclick="toggleLanguage()">
+        <span class="lang-pt">🇬🇧 Switch to English</span>
+        <span class="lang-en">🇵🇹 Mudar para Português</span>
+    </div>
+
+    <div class="header">
+        <h1>📐 Design Principles for 3D Printing</h1>
+        <p class="lang-pt">Princípios de Design para Impressão 3D</p>
+        <p class="lang-en">Essential Guidelines for Successful Prints</p>
+    </div>
+    
+    <div class="container">
+        <a href="index.html" class="back-link">← <span class="lang-pt">Voltar aos Workshops</span><span class="lang-en">Back to Workshops</span></a>
+        
+        <div class="intro">
+            <h2 class="lang-pt">📚 Sobre Este Guia</h2>
+            <h2 class="lang-en">📚 About This Guide</h2>
+            <p class="lang-pt">Este guia apresenta os princípios fundamentais para criar designs otimizados para impressão 3D FDM. Seguir estas regras ajuda a garantir impressões bem-sucedidas, minimiza a necessidade de suportes e resulta em peças de melhor qualidade.</p>
+            <p class="lang-en">This guide presents the fundamental principles for creating designs optimized for FDM 3D printing. Following these rules helps ensure successful prints, minimizes the need for supports, and results in better quality parts.</p>
+        </div>
+        
+        <!-- CATEGORY 1: BASIC GEOMETRY -->
+        <div class="category">
+            <h2 class="category-title">
+                <span>📏</span>
+                <span class="lang-pt">Geometria Básica</span>
+                <span class="lang-en">Basic Geometry</span>
+            </h2>
+            
+            <!-- Wall Thickness -->
+            <div class="principle">
+                <div class="principle-header">
+                    <div class="principle-image">
+                        <img src="/imgs/Wall-Thickness.webp" alt="Wall Thickness">
+                    </div>
+                    <div class="principle-content">
+                        <h3 class="principle-title lang-pt">Espessura de Parede</h3>
+                        <h3 class="principle-title lang-en">Wall Thickness</h3>
+                        <p class="principle-subtitle lang-pt">Mínimo: 1-2mm | Recomendado: 2-3mm</p>
+                        <p class="principle-subtitle lang-en">Minimum: 1-2mm | Recommended: 2-3mm</p>
+                        <p class="principle-text lang-pt">
+                            Paredes muito finas são frágeis e difíceis de imprimir com consistência. A espessura mínima depende do tamanho do bico (normalmente 0.4mm), mas paredes com pelo menos 2-3mm garantem resistência estrutural adequada.
+                        </p>
+                        <p class="principle-text lang-en">
+                            Very thin walls are fragile and difficult to print consistently. Minimum thickness depends on nozzle size (typically 0.4mm), but walls with at least 2-3mm ensure adequate structural strength.
+                        </p>
+                    </div>
+                </div>
+                <div class="rule-box">
+                    <div class="rule-title lang-pt">📐 Regra de Ouro</div>
+                    <div class="rule-title lang-en">📐 Golden Rule</div>
+                    <p class="lang-pt">Espessura mínima = 3x o diâmetro do bico. Para bico de 0.4mm: mínimo 1.2mm, ideal 2-3mm.</p>
+                    <p class="lang-en">Minimum thickness = 3x nozzle diameter. For 0.4mm nozzle: minimum 1.2mm, ideal 2-3mm.</p>
+                </div>
+            </div>
+            
+            <!-- Feature Size -->
+            <div class="principle">
+                <div class="principle-header">
+                    <div class="principle-image">
+                        <img src="/imgs/Feature-Size.webp" alt="Feature Size">
+                    </div>
+                    <div class="principle-content">
+                        <h3 class="principle-title lang-pt">Tamanho de Detalhes</h3>
+                        <h3 class="principle-title lang-en">Feature Size</h3>
+                        <p class="principle-subtitle lang-pt">Detalhes muito pequenos não imprimem bem</p>
+                        <p class="principle-subtitle lang-en">Very small details don't print well</p>
+                        <p class="principle-text lang-pt">
+                            Detalhes menores que 1-2mm (como furos pequenos, texto fino, ou features delicados) podem não sair bem ou podem fundir-se durante a impressão. O bico tem um diâmetro físico que limita o detalhe possível.
+                        </p>
+                        <p class="principle-text lang-en">
+                            Details smaller than 1-2mm (like tiny holes, thin text, or delicate features) may not print well or may fuse during printing. The nozzle has a physical diameter that limits possible detail.
+                        </p>
+                    </div>
+                </div>
+                <div class="tip-box">
+                    <div class="tip-title lang-pt">💡 Dica</div>
+                    <div class="tip-title lang-en">💡 Tip</div>
+                    <p class="lang-pt">Se precisas de detalhes muito finos, considera usar uma altura de camada menor (0.1mm) ou imprimir em resina.</p>
+                    <p class="lang-en">If you need very fine details, consider using a smaller layer height (0.1mm) or resin printing.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- CATEGORY 2: HOLES AND OPENINGS -->
+        <div class="category">
+            <h2 class="category-title">
+                <span>⭕</span>
+                <span class="lang-pt">Orifícios e Aberturas</span>
+                <span class="lang-en">Holes and Openings</span>
+            </h2>
+            
+            <!-- Holes -->
+            <div class="principle">
+                <div class="principle-header">
+                    <div class="principle-image">
+                        <img src="/imgs/Holes.webp" alt="Holes">
+                    </div>
+                    <div class="principle-content">
+                        <h3 class="principle-title lang-pt">Tamanho de Orifícios</h3>
+                        <h3 class="principle-title lang-en">Hole Size</h3>
+                        <p class="principle-subtitle lang-pt">Orifícios pequenos imprimem menores do que desenhado</p>
+                        <p class="principle-subtitle lang-en">Small holes print smaller than designed</p>
+                        <p class="principle-text lang-pt">
+                            Orifícios circulares pequenos (< 5mm) tendem a sair menores que o desenhado devido à forma como as camadas se sobrepõem. Quanto menor o orifício, maior o erro. Para orifícios críticos, adiciona 0.2-0.5mm ao diâmetro no design.
+                        </p>
+                        <p class="principle-text lang-en">
+                            Small circular holes (< 5mm) tend to print smaller than designed due to how layers overlap. The smaller the hole, the larger the error. For critical holes, add 0.2-0.5mm to the diameter in your design.
+                        </p>
+                    </div>
+                </div>
+                <div class="rule-box">
+                    <div class="rule-title lang-pt">🎯 Compensação</div>
+                    <div class="rule-title lang-en">🎯 Compensation</div>
+                    <p class="lang-pt">Orifícios 3-5mm: adiciona 0.2mm | Orifícios < 3mm: adiciona 0.3-0.5mm ou considera furar depois.</p>
+                    <p class="lang-en">Holes 3-5mm: add 0.2mm | Holes < 3mm: add 0.3-0.5mm or consider drilling after.</p>
+                </div>
+            </div>
+            
+            <!-- Horizontal Holes -->
+            <div class="principle">
+                <div class="principle-header">
+                    <div class="principle-image">
+                        <img src="/imgs/Horizontal-Holes-How-To.webp" alt="Horizontal Holes">
+                    </div>
+                    <div class="principle-content">
+                        <h3 class="principle-title lang-pt">Orifícios Horizontais</h3>
+                        <h3 class="principle-title lang-en">Horizontal Holes</h3>
+                        <p class="principle-subtitle lang-pt">Técnicas para imprimir orifícios laterais</p>
+                        <p class="principle-subtitle lang-en">Techniques for printing side holes</p>
+                        <p class="principle-text lang-pt">
+                            Orifícios horizontais são desafiantes porque a parte superior precisa de suporte. Soluções: usar forma de "gota" com topo a 45°, adicionar suportes internos removíveis, ou usar técnicas como adicionar pontos de suporte (teardrop shape).
+                        </p>
+                        <p class="principle-text lang-en">
+                            Horizontal holes are challenging because the top needs support. Solutions: use a "teardrop" shape with 45° top, add removable internal supports, or use techniques like adding support points (teardrop shape).
+                        </p>
+                    </div>
+                </div>
+                <div class="tip-box">
+                    <div class="tip-title lang-pt">💡 Solução: Teardrop Shape</div>
+                    <div class="tip-title lang-en">💡 Solution: Teardrop Shape</div>
+                    <p class="lang-pt">Em vez de um círculo perfeito, usa uma forma de lágrima com o topo a 45°. O orifício fica funcional sem necessitar suportes internos.</p>
+                    <p class="lang-en">Instead of a perfect circle, use a teardrop shape with the top at 45°. The hole remains functional without needing internal supports.</p>
+                </div>
+            </div>
+            
+            <!-- Unsupported Holes -->
+            <div class="principle">
+                <div class="principle-header">
+                    <div class="principle-image">
+                        <img src="/imgs/Unsupported-Holes.webp" alt="Unsupported Holes">
+                    </div>
+                    <div class="principle-content">
+                        <h3 class="principle-title lang-pt">Orifícios Não Suportados</h3>
+                        <h3 class="principle-title lang-en">Unsupported Holes</h3>
+                        <p class="principle-subtitle lang-pt">Como orientar peças com orifícios</p>
+                        <p class="principle-subtitle lang-en">How to orient parts with holes</p>
+                        <p class="principle-text lang-pt">
+                            A orientação é crítica. Orifícios que apontam para cima imprimem perfeitamente. Orifícios que apontam para os lados precisam de técnicas especiais. Sempre que possível, orienta a peça para que orifícios críticos sejam verticais.
+                        </p>
+                        <p class="principle-text lang-en">
+                            Orientation is critical. Holes pointing up print perfectly. Holes pointing sideways need special techniques. Whenever possible, orient the part so critical holes are vertical.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- CATEGORY 3: OVERHANGS AND SUPPORTS -->
+        <div class="category">
+            <h2 class="category-title">
+                <span>🏗️</span>
+                <span class="lang-pt">Overhangs e Suportes</span>
+                <span class="lang-en">Overhangs and Supports</span>
+            </h2>
+            
+            <!-- Overhangs -->
+            <div class="principle">
+                <div class="principle-header">
+                    <div class="principle-image">
+                        <img src="/imgs/Overhangs.webp" alt="Overhangs">
+                    </div>
+                    <div class="principle-content">
+                        <h3 class="principle-title lang-pt">Ângulos de Overhang</h3>
+                        <h3 class="principle-title lang-en">Overhang Angles</h3>
+                        <p class="principle-subtitle lang-pt">Regra dos 45°</p>
+                        <p class="principle-subtitle lang-en">45° Rule</p>
+                        <p class="principle-text lang-pt">
+                            Ângulos até 45° da vertical imprimem bem sem suportes. Acima de 45° começa a haver problemas - o material "cai" porque não tem base suficiente. Quanto maior o ângulo (mais horizontal), pior o resultado. Acima de 70° normalmente precisa de suportes.
+                        </p>
+                        <p class="principle-text lang-en">
+                            Angles up to 45° from vertical print well without supports. Above 45° problems begin - the material "sags" because there isn't enough base. The greater the angle (more horizontal), the worse the result. Above 70° usually needs supports.
+                        </p>
+                    </div>
+                </div>
+                <div class="rule-box">
+                    <div class="rule-title lang-pt">📐 Regra dos 45°</div>
+                    <div class="rule-title lang-en">📐 45° Rule</div>
+                    <p class="lang-pt">0-45°: Excelente | 45-60°: Aceitável | 60-70°: Arriscado | >70°: Necessita suportes</p>
+                    <p class="lang-en">0-45°: Excellent | 45-60°: Acceptable | 60-70°: Risky | >70°: Needs supports</p>
+                </div>
+            </div>
+            
+            <!-- Bridging -->
+            <div class="principle">
+                <div class="principle-header">
+                    <div class="principle-image">
+                        <img src="/imgs/Bridging.webp" alt="Bridging">
+                    </div>
+                    <div class="principle-content">
+                        <h3 class="principle-title lang-pt">Pontes (Bridging)</h3>
+                        <h3 class="principle-title lang-en">Bridging</h3>
+                        <p class="principle-subtitle lang-pt">Distâncias horizontais sem suporte</p>
+                        <p class="principle-subtitle lang-en">Horizontal distances without support</p>
+                        <p class="principle-text lang-pt">
+                            Impressoras FDM conseguem fazer "pontes" - linhas horizontais entre dois pontos de apoio. Pontes até 5mm são geralmente confiáveis. De 5-20mm é possível mas pode haver alguma queda. Acima de 20mm normalmente precisa de suportes ou redesign.
+                        </p>
+                        <p class="principle-text lang-en">
+                            FDM printers can make "bridges" - horizontal lines between two support points. Bridges up to 5mm are generally reliable. 5-20mm is possible but may have some sagging. Above 20mm usually needs supports or redesign.
+                        </p>
+                    </div>
+                </div>
+                <div class="tip-box">
+                    <div class="tip-title lang-pt">🎯 Bridging Perfeito</div>
+                    <div class="tip-title lang-en">🎯 Perfect Bridging</div>
+                    <p class="lang-pt">Para melhores resultados: velocidade de bridging alta (50-70mm/s), arrefecimento máximo da ventoinha, e distâncias curtas.</p>
+                    <p class="lang-en">For best results: high bridging speed (50-70mm/s), maximum fan cooling, and short distances.</p>
+                </div>
+            </div>
+            
+            <!-- Unsupported Edges -->
+            <div class="principle">
+                <div class="principle-header">
+                    <div class="principle-image">
+                        <img src="/imgs/Unsupported-Edges.webp" alt="Unsupported Edges">
+                    </div>
+                    <div class="principle-content">
+                        <h3 class="principle-title lang-pt">Arestas Não Suportadas</h3>
+                        <h3 class="principle-title lang-en">Unsupported Edges</h3>
+                        <p class="principle-subtitle lang-pt">Evitar arestas que "flutuam"</p>
+                        <p class="principle-subtitle lang-en">Avoid edges that "float"</p>
+                        <p class="principle-text lang-pt">
+                            Arestas que se projetam para fora sem suporte por baixo tendem a cair ou criar imperfeições. Soluções: adicionar chanfros na base, criar transições graduais, ou rotacionar a peça para que estas arestas tenham suporte natural.
+                        </p>
+                        <p class="principle-text lang-en">
+                            Edges that project outward without support underneath tend to sag or create imperfections. Solutions: add base chamfers, create gradual transitions, or rotate the part so these edges have natural support.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- CATEGORY 4: DETAILS AND FINISHING -->
+        <div class="category">
+            <h2 class="category-title">
+                <span>✨</span>
+                <span class="lang-pt">Detalhes e Acabamentos</span>
+                <span class="lang-en">Details and Finishing</span>
+            </h2>
+            
+            <!-- Fillets -->
+            <div class="principle">
+                <div class="principle-header">
+                    <div class="principle-image">
+                        <img src="/imgs/Fillets.webp" alt="Fillets">
+                    </div>
+                    <div class="principle-content">
+                        <h3 class="principle-title lang-pt">Filetes (Arredondamentos)</h3>
+                        <h3 class="principle-title lang-en">Fillets (Rounded Edges)</h3>
+                        <p class="principle-subtitle lang-pt">Arredondar arestas melhora qualidade e resistência</p>
+                        <p class="principle-subtitle lang-en">Rounding edges improves quality and strength</p>
+                        <p class="principle-text lang-pt">
+                            Filetes eliminam cantos vivos, melhoram o aspeto visual, reduzem concentração de tensões (mais resistente), e imprimem melhor que cantos afiados. Usa raios de 1-3mm em arestas exteriores e interiores sempre que possível.
+                        </p>
+                        <p class="principle-text lang-en">
+                            Fillets eliminate sharp corners, improve visual appearance, reduce stress concentration (stronger), and print better than sharp corners. Use 1-3mm radius on exterior and interior edges whenever possible.
+                        </p>
+                    </div>
+                </div>
+                <div class="tip-box">
+                    <div class="tip-title lang-pt">💪 Benefício Extra: Resistência</div>
+                    <div class="tip-title lang-en">💪 Extra Benefit: Strength</div>
+                    <p class="lang-pt">Peças com filetes são mais resistentes porque eliminam pontos de concentração de stress que causam fracturas.</p>
+                    <p class="lang-en">Parts with fillets are stronger because they eliminate stress concentration points that cause fractures.</p>
+                </div>
+            </div>
+            
+            <!-- Base Corners -->
+            <div class="principle">
+                <div class="principle-header">
+                    <div class="principle-image">
+                        <img src="/imgs/Base-Corners.webp" alt="Base Corners">
+                    </div>
+                    <div class="principle-content">
+                        <h3 class="principle-title lang-pt">Cantos da Base</h3>
+                        <h3 class="principle-title lang-en">Base Corners</h3>
+                        <p class="principle-subtitle lang-pt">Arredondar cantos inferiores previne warping</p>
+                        <p class="principle-subtitle lang-en">Rounding lower corners prevents warping</p>
+                        <p class="principle-text lang-pt">
+                            Cantos afiados na base tendem a descolar da plataforma (warping) devido à contração do material. Adicionar filetes nos cantos inferiores (raio 2-5mm) aumenta a área de adesão e distribui melhor as tensões térmicas.
+                        </p>
+                        <p class="principle-text lang-en">
+                            Sharp corners on the base tend to lift from the platform (warping) due to material shrinkage. Adding fillets to lower corners (2-5mm radius) increases adhesion area and better distributes thermal stresses.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Base Chamfers -->
+            <div class="principle">
+                <div class="principle-header">
+                    <div class="principle-image">
+                        <img src="/imgs/Base-Chamfers.webp" alt="Base Chamfers">
+                    </div>
+                    <div class="principle-content">
+                        <h3 class="principle-title lang-pt">Chanfros na Base</h3>
+                        <h3 class="principle-title lang-en">Base Chamfers</h3>
+                        <p class="principle-subtitle lang-pt">Facilitar remoção de brim/raft</p>
+                        <p class="principle-subtitle lang-en">Facilitate brim/raft removal</p>
+                        <p class="principle-text lang-pt">
+                            Um pequeno chanfro (0.5-1mm) na aresta inferior facilita muito a remoção de brim ou raft, e também previne "elephant foot" - quando a primeira camada é mais larga que as outras devido à pressão na plataforma.
+                        </p>
+                        <p class="principle-text lang-en">
+                            A small chamfer (0.5-1mm) on the bottom edge greatly facilitates brim or raft removal, and also prevents "elephant foot" - when the first layer is wider than others due to platform pressure.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Clearance -->
+            <div class="principle">
+                <div class="principle-header">
+                    <div class="principle-image">
+                        <img src="/imgs/Clearance.webp" alt="Clearance">
+                    </div>
+                    <div class="principle-content">
+                        <h3 class="principle-title lang-pt">Folgas (Clearances)</h3>
+                        <h3 class="principle-title lang-en">Clearances</h3>
+                        <p class="principle-subtitle lang-pt">Espaço entre peças que se encaixam</p>
+                        <p class="principle-subtitle lang-en">Space between parts that fit together</p>
+                        <p class="principle-text lang-pt">
+                            Para peças que se encaixam ou movem, adiciona sempre folga. Mínimo 0.2mm para encaixe apertado, 0.4-0.5mm para encaixe confortável, 0.8-1mm para movimento livre. A precisão da impressora afecta quanto espaço é necessário.
+                        </p>
+                        <p class="principle-text lang-en">
+                            For parts that fit or move together, always add clearance. Minimum 0.2mm for tight fit, 0.4-0.5mm for comfortable fit, 0.8-1mm for free movement. Printer precision affects how much space is needed.
+                        </p>
+                    </div>
+                </div>
+                <div class="rule-box">
+                    <div class="rule-title lang-pt">🎯 Tabela de Folgas</div>
+                    <div class="rule-title lang-en">🎯 Clearance Table</div>
+                    <p class="lang-pt">Encaixe forçado: 0.1-0.2mm | Encaixe justo: 0.3-0.4mm | Deslizante: 0.5-0.8mm | Rotação livre: 1mm+</p>
+                    <p class="lang-en">Press fit: 0.1-0.2mm | Snug fit: 0.3-0.4mm | Sliding: 0.5-0.8mm | Free rotation: 1mm+</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- CATEGORY 5: TEXT AND ENGRAVING -->
+        <div class="category">
+            <h2 class="category-title">
+                <span>🔤</span>
+                <span class="lang-pt">Texto e Gravação</span>
+                <span class="lang-en">Text and Engraving</span>
+            </h2>
+            
+            <!-- Vertical Emboss -->
+            <div class="principle">
+                <div class="principle-header">
+                    <div class="principle-image">
+                        <img src="/imgs/Vertical-Emboss.webp" alt="Vertical Emboss">
+                    </div>
+                    <div class="principle-content">
+                        <h3 class="principle-title lang-pt">Gravação Vertical</h3>
+                        <h3 class="principle-title lang-en">Vertical Emboss</h3>
+                        <p class="principle-subtitle lang-pt">Texto em paredes verticais</p>
+                        <p class="principle-subtitle lang-en">Text on vertical walls</p>
+                        <p class="principle-text lang-pt">
+                            Texto em paredes verticais sai com boa qualidade. Para texto em relevo (saindo da parede): mínimo 1mm de profundidade, largura de traço mínima 0.8mm. Para texto gravado (para dentro): mínimo 0.5mm de profundidade, largura 0.8mm+.
+                        </p>
+                        <p class="principle-text lang-en">
+                            Text on vertical walls comes out with good quality. For raised text (protruding from wall): minimum 1mm depth, minimum stroke width 0.8mm. For engraved text (inward): minimum 0.5mm depth, width 0.8mm+.
+                        </p>
+                    </div>
+                </div>
+                <div class="tip-box">
+                    <div class="tip-title lang-pt">📝 Fonte Recomendada</div>
+                    <div class="tip-title lang-en">📝 Recommended Font</div>
+                    <p class="lang-pt">Usa fontes sem serifa (sans-serif) com traços uniformes. Arial, Helvetica, ou fontes específicas para 3D como "Bauhaus" funcionam bem.</p>
+                    <p class="lang-en">Use sans-serif fonts with uniform strokes. Arial, Helvetica, or 3D-specific fonts like "Bauhaus" work well.</p>
+                </div>
+            </div>
+            
+            <!-- Horizontal Emboss -->
+            <div class="principle">
+                <div class="principle-header">
+                    <div class="principle-image">
+                        <img src="/imgs/Emboss-Horizontal.webp" alt="Horizontal Emboss">
+                    </div>
+                    <div class="principle-content">
+                        <h3 class="principle-title lang-pt">Gravação Horizontal</h3>
+                        <h3 class="principle-title lang-en">Horizontal Emboss</h3>
+                        <p class="principle-subtitle lang-pt">Texto em superfícies horizontais</p>
+                        <p class="principle-subtitle lang-en">Text on horizontal surfaces</p>
+                        <p class="principle-text lang-pt">
+                            Para superfícies horizontais: texto em relevo (para cima) fica nítido com mínimo 0.5mm altura e 2x altura de camada. Texto gravado (para baixo) precisa de mínimo 1mm profundidade. Superfícies horizontais superiores dão melhor resultado que inferiores.
+                        </p>
+                        <p class="principle-text lang-en">
+                            For horizontal surfaces: raised text (upward) is sharp with minimum 0.5mm height and 2x layer height. Engraved text (downward) needs minimum 1mm depth. Top horizontal surfaces give better results than bottom ones.
+                        </p>
+                    </div>
+                </div>
+                <div class="rule-box">
+                    <div class="rule-title lang-pt">⚡ Altura vs Layer Height</div>
+                    <div class="rule-title lang-en">⚡ Height vs Layer Height</div>
+                    <p class="lang-pt">Para texto visível: altura mínima = 2x layer height. Com 0.2mm camada → texto mínimo 0.4mm.</p>
+                    <p class="lang-en">For visible text: minimum height = 2x layer height. With 0.2mm layer → minimum 0.4mm text.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- CATEGORY 6: FUNCTIONAL ELEMENTS -->
+        <div class="category">
+            <h2 class="category-title">
+                <span>🔧</span>
+                <span class="lang-pt">Elementos Funcionais</span>
+                <span class="lang-en">Functional Elements</span>
+            </h2>
+            
+            <!-- Pins -->
+            <div class="principle">
+                <div class="principle-header">
+                    <div class="principle-image">
+                        <img src="/imgs/Pins.webp" alt="Pins">
+                    </div>
+                    <div class="principle-content">
+                        <h3 class="principle-title lang-pt">Pins Verticais</h3>
+                        <h3 class="principle-title lang-en">Vertical Pins</h3>
+                        <p class="principle-subtitle lang-pt">Pinos de alinhamento e fixação</p>
+                        <p class="principle-subtitle lang-en">Alignment and fixing pins</p>
+                        <p class="principle-text lang-pt">
+                            Pins verticais finos são possíveis mas frágeis. Diâmetro mínimo: 2mm para pins funcionais. Para melhor resistência: diâmetro 3-4mm. Considera adicionar chanfro no topo (cone) para facilitar inserção. Altura máxima sem suporte = 10x o diâmetro.
+                        </p>
+                        <p class="principle-text lang-en">
+                            Thin vertical pins are possible but fragile. Minimum diameter: 2mm for functional pins. For better strength: 3-4mm diameter. Consider adding chamfer on top (cone) to facilitate insertion. Maximum height without support = 10x diameter.
+                        </p>
+                    </div>
+                </div>
+                <div class="warning-box">
+                    <div class="warning-title lang-pt">⚠️ Atenção: Direção de Stress</div>
+                    <div class="warning-title lang-en">⚠️ Caution: Stress Direction</div>
+                    <p class="lang-pt">Pins verticais são mais fracos na direção horizontal (entre camadas). Se o pin vai ser empurrado lateralmente, considera imprimir deitado.</p>
+                    <p class="lang-en">Vertical pins are weaker in horizontal direction (between layers). If the pin will be pushed sideways, consider printing it laying down.</p>
+                </div>
+            </div>
+            
+            <!-- Threads Modeled -->
+            <div class="principle">
+                <div class="principle-header">
+                    <div class="principle-image">
+                        <img src="/imgs/Threads-Modeled.webp" alt="Threads Modeled">
+                    </div>
+                    <div class="principle-content">
+                        <h3 class="principle-title lang-pt">Roscas Modeladas</h3>
+                        <h3 class="principle-title lang-en">Modeled Threads</h3>
+                        <p class="principle-subtitle lang-pt">Roscas incluídas no design 3D</p>
+                        <p class="principle-subtitle lang-en">Threads included in 3D design</p>
+                        <p class="principle-text lang-pt">
+                            Roscas modeladas podem funcionar mas são desafiantes. Mínimo M8 (8mm diâmetro) para resultados confiáveis. Adiciona 0.2-0.3mm de folga. Imprime com layer height baixa (0.1-0.15mm) para melhor definição. Orientação vertical geralmente melhor.
+                        </p>
+                        <p class="principle-text lang-en">
+                            Modeled threads can work but are challenging. Minimum M8 (8mm diameter) for reliable results. Add 0.2-0.3mm clearance. Print with low layer height (0.1-0.15mm) for better definition. Vertical orientation usually better.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Threads Post Process -->
+            <div class="principle">
+                <div class="principle-header">
+                    <div class="principle-image">
+                        <img src="/imgs/Threads-Post-Process.webp" alt="Threads Post Process">
+                    </div>
+                    <div class="principle-content">
+                        <h3 class="principle-title lang-pt">Roscas Pós-Processamento</h3>
+                        <h3 class="principle-title lang-en">Post-Process Threads</h3>
+                        <p class="principle-subtitle lang-pt">Adicionar rosca depois de imprimir</p>
+                        <p class="principle-subtitle lang-en">Add threads after printing</p>
+                        <p class="principle-text lang-pt">
+                            Método mais confiável! Imprime um orifício simples e adiciona rosca depois com: macho e tarraxa (cortar rosca), inserts metálicos aquecidos (permanente e forte), ou parafusos auto-roscantes em plástico. Sempre mais forte que rosca impressa.
+                        </p>
+                        <p class="principle-text lang-en">
+                            Most reliable method! Print a simple hole and add threads after with: tap and die (cut thread), heated metal inserts (permanent and strong), or self-tapping screws in plastic. Always stronger than printed threads.
+                        </p>
+                    </div>
+                </div>
+                <div class="tip-box">
+                    <div class="tip-title lang-pt">⭐ Melhor Opção: Inserts</div>
+                    <div class="tip-title lang-en">⭐ Best Option: Inserts</div>
+                    <p class="lang-pt">Inserts metálicos (como os de latão) dão roscas super resistentes. Aqueces o insert com ferro de soldar e inseres no plástico quente. Resultado profissional!</p>
+                    <p class="lang-en">Metal inserts (like brass ones) give super strong threads. Heat the insert with soldering iron and insert into hot plastic. Professional result!</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- QUICK REFERENCE -->
+        <div class="category">
+            <h2 class="category-title">
+                <span>📋</span>
+                <span class="lang-pt">Referência Rápida</span>
+                <span class="lang-en">Quick Reference</span>
+            </h2>
+            
+            <div class="principle">
+                <h3 class="principle-title lang-pt">Checklist Antes de Imprimir</h3>
+                <h3 class="principle-title lang-en">Pre-Print Checklist</h3>
+                
+                <div class="rule-box">
+                    <p class="lang-pt"><strong>✓</strong> Paredes têm pelo menos 2-3mm de espessura?</p>
+                    <p class="lang-en"><strong>✓</strong> Walls are at least 2-3mm thick?</p>
+                </div>
+                
+                <div class="rule-box">
+                    <p class="lang-pt"><strong>✓</strong> Ângulos de overhang estão abaixo de 45°?</p>
+                    <p class="lang-en"><strong>✓</strong> Overhang angles are below 45°?</p>
+                </div>
+                
+                <div class="rule-box">
+                    <p class="lang-pt"><strong>✓</strong> Orifícios pequenos têm compensação de tamanho?</p>
+                    <p class="lang-en"><strong>✓</strong> Small holes have size compensation?</p>
+                </div>
+                
+                <div class="rule-box">
+                    <p class="lang-pt"><strong>✓</strong> Peças móveis têm folga adequada (0.4mm+)?</p>
+                    <p class="lang-en"><strong>✓</strong> Moving parts have adequate clearance (0.4mm+)?</p>
+                </div>
+                
+                <div class="rule-box">
+                    <p class="lang-pt"><strong>✓</strong> Cantos da base têm filetes para prevenir warping?</p>
+                    <p class="lang-en"><strong>✓</strong> Base corners have fillets to prevent warping?</p>
+                </div>
+                
+                <div class="rule-box">
+                    <p class="lang-pt"><strong>✓</strong> Texto tem tamanho mínimo visível (0.4mm+ altura)?</p>
+                    <p class="lang-en"><strong>✓</strong> Text has minimum visible size (0.4mm+ height)?</p>
+                </div>
+                
+                <div class="rule-box">
+                    <p class="lang-pt"><strong>✓</strong> Orientação da peça minimiza necessidade de suportes?</p>
+                    <p class="lang-en"><strong>✓</strong> Part orientation minimizes need for supports?</p>
+                </div>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 60px; padding: 30px; background: #ebf4ff; border-radius: 10px;">
+            <h3 class="lang-pt">🎓 Continue Aprendendo</h3>
+            <h3 class="lang-en">🎓 Continue Learning</h3>
+            <p class="lang-pt" style="margin: 15px 0;">Estes princípios são fundamentais, mas a melhor forma de aprender é experimentar! Começa com designs simples e vai aumentando a complexidade à medida que ganhas experiência.</p>
+            <p class="lang-en" style="margin: 15px 0;">These principles are fundamental, but the best way to learn is to experiment! Start with simple designs and increase complexity as you gain experience.</p>
+            <a href="index.html" class="back-link" style="display: inline-block; margin-top: 15px; font-size: 1.2em;">
+                <span class="lang-pt">← Voltar aos Workshops</span>
+                <span class="lang-en">← Back to Workshops</span>
+            </a>
+        </div>
+    </div>
+    
+    <script>
+        function toggleLanguage() {
+            document.body.classList.toggle('lang-en');
+        }
+    </script>
+</body>
+</html>

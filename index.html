@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workshop de Impressão 3D / 3D Printing Workshop</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 60px;
+            max-width: 800px;
+            width: 100%;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #718096;
+            margin-bottom: 20px;
+            font-size: 1.2em;
+        }
+        
+        .info-link {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .design-principles-link {
+            display: inline-block;
+            background: #48bb78;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(72, 187, 120, 0.3);
+        }
+        
+        .design-principles-link:hover {
+            background: #38a169;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(72, 187, 120, 0.4);
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            color: #667eea;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .icon {
+            width: 30px;
+            height: 30px;
+        }
+        
+        .options {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .option-card {
+            background: #f7fafc;
+            border: 3px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        .option-card:hover {
+            border-color: #667eea;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.2);
+        }
+        
+        .option-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+        
+        .option-desc {
+            color: #718096;
+            line-height: 1.6;
+        }
+        
+        .duration-badge {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-top: 10px;
+            font-weight: 600;
+        }
+        
+        .language-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .language-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🖨️ Workshop de Impressão 3D</h1>
+        <p class="subtitle">3D Printing Workshop</p>
+        
+        <div class="info-link">
+            <a href="design-principles.html" class="design-principles-link">
+                📐 Design Principles / Princípios de Design
+            </a>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title">
+                <span>🌍</span>
+                Escolha o Idioma / Choose Language
+            </h2>
+            <div class="language-grid options">
+                <div class="option-card" onclick="selectLanguage('pt')">
+                    <div class="option-title">🇵🇹 Português</div>
+                    <div class="option-desc">Versão em Português de Portugal</div>
+                </div>
+                <div class="option-card" onclick="selectLanguage('en')">
+                    <div class="option-title">🇬🇧 English</div>
+                    <div class="option-desc">English version</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section" id="duration-section">
+            <h2 class="section-title">
+                <span>⏱️</span>
+                <span id="duration-title">Escolha a Duração / Choose Duration</span>
+            </h2>
+            <div class="options">
+                <a href="#" class="option-card" onclick="selectDuration(1, event)">
+                    <div class="option-title" id="duration-1-title">Workshop de 1 Hora / 1 Hour Workshop</div>
+                    <div class="option-desc" id="duration-1-desc">Introdução ao Tinkercad e modelação 3D básica / Introduction to Tinkercad and basic 3D modeling</div>
+                    <span class="duration-badge">1h</span>
+                </a>
+                <a href="#" class="option-card" onclick="selectDuration(2, event)">
+                    <div class="option-title" id="duration-2-title">Workshop de 2 Horas / 2 Hour Workshop</div>
+                    <div class="option-desc" id="duration-2-desc">Tinkercad + preparação no Slicer para impressão / Tinkercad + Slicer preparation for printing</div>
+                    <span class="duration-badge">2h</span>
+                </a>
+                <a href="#" class="option-card" onclick="selectDuration(4, event)">
+                    <div class="option-title" id="duration-4-title">Workshop de 4 Horas / 4 Hour Workshop</div>
+                    <div class="option-desc" id="duration-4-desc">Projeto completo: Badge personalizado no Onshape / Complete project: Personalized badge in Onshape</div>
+                    <span class="duration-badge">4h</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let selectedLanguage = '';
+        
+        const translations = {
+            pt: {
+                durationTitle: 'Escolha a Duração',
+                duration1Title: 'Workshop de 1 Hora',
+                duration1Desc: 'Introdução ao Tinkercad e modelação 3D básica',
+                duration2Title: 'Workshop de 2 Horas',
+                duration2Desc: 'Tinkercad + preparação no Slicer para impressão',
+                duration4Title: 'Workshop de 4 Horas',
+                duration4Desc: 'Projeto completo: Badge personalizado no Onshape'
+            },
+            en: {
+                durationTitle: 'Choose Duration',
+                duration1Title: '1 Hour Workshop',
+                duration1Desc: 'Introduction to Tinkercad and basic 3D modeling',
+                duration2Title: '2 Hour Workshop',
+                duration2Desc: 'Tinkercad + Slicer preparation for printing',
+                duration4Title: '4 Hour Workshop',
+                duration4Desc: 'Complete project: Personalized badge in Onshape'
+            }
+        };
+        
+        function selectLanguage(lang) {
+            selectedLanguage = lang;
+            
+            // Update duration section text
+            const t = translations[lang];
+            document.getElementById('duration-title').textContent = t.durationTitle;
+            document.getElementById('duration-1-title').textContent = t.duration1Title;
+            document.getElementById('duration-1-desc').textContent = t.duration1Desc;
+            document.getElementById('duration-2-title').textContent = t.duration2Title;
+            document.getElementById('duration-2-desc').textContent = t.duration2Desc;
+            document.getElementById('duration-4-title').textContent = t.duration4Title;
+            document.getElementById('duration-4-desc').textContent = t.duration4Desc;
+            
+            // Highlight selected language
+            document.querySelectorAll('.language-grid .option-card').forEach(card => {
+                card.style.borderColor = '#e2e8f0';
+                card.style.backgroundColor = '#f7fafc';
+            });
+            event.target.closest('.option-card').style.borderColor = '#667eea';
+            event.target.closest('.option-card').style.backgroundColor = '#edf2f7';
+        }
+        
+        function selectDuration(hours, event) {
+            event.preventDefault();
+            if (!selectedLanguage) {
+                alert('Please select a language first / Por favor selecione um idioma primeiro');
+                return;
+            }
+            
+            const filename = `workshop-${hours}h-${selectedLanguage}.html`;
+            window.location.href = filename;
+        }
+    </script>
+</body>
+</html>

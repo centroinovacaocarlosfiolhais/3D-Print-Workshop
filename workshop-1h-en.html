@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1h Workshop - 3D Printing with Tinkercad</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #2d3748;
+            background: #f7fafc;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .duration-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            margin-top: 10px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: -30px auto 40px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            padding: 40px;
+        }
+        
+        .back-link {
+            display: inline-block;
+            color: #667eea;
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        .subsection {
+            margin: 25px 0;
+        }
+        
+        .subsection-title {
+            color: #2d3748;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .step-list {
+            list-style: none;
+            counter-reset: step-counter;
+        }
+        
+        .step-list li {
+            counter-increment: step-counter;
+            margin-bottom: 15px;
+            padding-left: 40px;
+            position: relative;
+        }
+        
+        .step-list li:before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #667eea;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+        
+        .info-box {
+            background: #ebf4ff;
+            border-left: 4px solid #4299e1;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .tip-box {
+            background: #faf089;
+            border-left: 4px solid #ecc94b;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .tip-title, .info-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .checklist {
+            list-style: none;
+        }
+        
+        .checklist li {
+            padding: 10px;
+            margin: 8px 0;
+            background: #f7fafc;
+            border-radius: 5px;
+            padding-left: 40px;
+            position: relative;
+        }
+        
+        .checklist li:before {
+            content: "☐";
+            position: absolute;
+            left: 12px;
+            font-size: 1.3em;
+            color: #667eea;
+        }
+        
+        ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+        
+        ul li {
+            margin: 8px 0;
+        }
+        
+        @media print {
+            .back-link { display: none; }
+            .container { box-shadow: none; margin-top: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🖨️ 3D Printing Workshop</h1>
+        <p>3D Modeling with Tinkercad</p>
+        <div class="duration-badge">⏱️ Duration: 1 Hour</div>
+    </div>
+    
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to selection</a>
+        
+        <div class="section">
+            <h2 class="section-title">📋 Workshop Overview</h2>
+            <p>In this 1-hour workshop, you'll learn the basics of 3D modeling using Tinkercad, a free and intuitive online tool. You'll create your own personalized object ready for 3D printing.</p>
+            
+            <div class="info-box">
+                <div class="info-title">🎯 Learning Objectives</div>
+                <ul>
+                    <li>Understand basic 3D modeling concepts</li>
+                    <li>Use solids and holes in Tinkercad</li>
+                    <li>Add text and custom details</li>
+                    <li>Export files for 3D printing</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title">⚙️ Setup (5 min)</h2>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">Instructor Checklist</h3>
+                <ul class="checklist">
+                    <li>Computers with internet access</li>
+                    <li>Tinkercad accounts created or ready to create</li>
+                    <li>Projector/screen for demonstration</li>
+                    <li>Examples of 3D printed objects</li>
+                </ul>
+            </div>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">Participant Setup</h3>
+                <ol class="step-list">
+                    <li>Go to <strong>tinkercad.com</strong></li>
+                    <li>Create account or log in</li>
+                    <li>Click "Create new design"</li>
+                </ol>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title">🎨 Introduction to 3D Printing (10 min)</h2>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">Basic Concepts</h3>
+                <p><strong>What is 3D printing?</strong></p>
+                <p>3D printing builds objects layer by layer, like stacking very thin sheets of material until you form a solid object.</p>
+                
+                <div class="info-box">
+                    <div class="info-title">💡 Important 3D Design Principles</div>
+                    <ul>
+                        <li><strong>Thickness:</strong> All parts must have sufficient thickness (minimum 2-3mm)</li>
+                        <li><strong>Base:</strong> Objects need a stable base to prevent tipping</li>
+                        <li><strong>Supports:</strong> Suspended parts need support structures</li>
+                        <li><strong>Simplicity:</strong> Start simple and add complexity gradually</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">Quick Demonstration</h3>
+                <p>Show physical print examples and explain:</p>
+                <ul>
+                    <li>How you can see the layers</li>
+                    <li>Why some objects need supports</li>
+                    <li>Examples of good and bad designs</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title">🛠️ Practical Exercise: Create a Keychain (40 min)</h2>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">Tinkercad Interface (5 min)</h3>
+                <p><strong>Basic navigation:</strong></p>
+                <ul>
+                    <li><strong>Rotate view:</strong> Right mouse button + drag</li>
+                    <li><strong>Zoom:</strong> Mouse wheel</li>
+                    <li><strong>Pan view:</strong> Middle mouse button pressed + drag</li>
+                    <li><strong>Top view:</strong> Click on cube in top left corner</li>
+                </ul>
+            </div>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">Step by Step: Build the Keychain (30 min)</h3>
+                
+                <div class="tip-box">
+                    <div class="tip-title">💡 Instructor Tip</div>
+                    Demonstrate each step on the projector and give 2-3 minutes for participants to replicate before moving to the next step.
+                </div>
+                
+                <ol class="step-list">
+                    <li><strong>Create the base</strong>
+                        <ul>
+                            <li>Drag a "Box" shape from the sidebar to the workspace</li>
+                            <li>Click on the shape to select it</li>
+                            <li>Use the white handles in the corners to adjust size (make it flat like a card)</li>
+                            <li>Adjust height to create a thin but strong base</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Make the keyring hole</strong>
+                        <ul>
+                            <li>Drag a "Cylinder" to the workspace</li>
+                            <li>In the properties panel on the right, change from "Solid" to "Hole"</li>
+                            <li>Adjust the cylinder size to create an appropriate hole</li>
+                            <li>Position the cylinder at one end of the base</li>
+                            <li>Use the height arrows to ensure it goes through the entire thickness</li>
+                            <li>Select both shapes (Ctrl+A or drag a box around them) and click "Group"</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Add personalized text</strong>
+                        <ul>
+                            <li>Click "Text" in the sidebar</li>
+                            <li>Drag the text onto the base</li>
+                            <li>Double-click the text to edit (write name or word)</li>
+                            <li>Adjust text size to fit nicely on the base</li>
+                            <li>Decide if you want raised text (solid) or engraved text (hole)</li>
+                            <li>Adjust height to create sufficient depth</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Personalize with decorative shapes</strong>
+                        <ul>
+                            <li>Choose shapes from the panel (stars, hearts, symbols, etc.)</li>
+                            <li>Drag to the base</li>
+                            <li>Decide if you want raised relief (solid) or recessed relief (hole)</li>
+                            <li>Adjust size and position</li>
+                            <li>Try rotating shapes using the rotation tool</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Finalize and verify</strong>
+                        <ul>
+                            <li>Select all final pieces (Ctrl+A)</li>
+                            <li>Click "Group" to merge everything into a single object</li>
+                            <li>Rotate the object to check from all angles</li>
+                            <li>Confirm the hole goes all the way through</li>
+                            <li>Verify all parts have adequate thickness</li>
+                        </ul>
+                    </li>
+                </ol>
+                
+                <div class="info-box">
+                    <div class="info-title">🎯 Checkpoints</div>
+                    <p>During the exercise, circulate and verify:</p>
+                    <ul>
+                        <li>Can everyone navigate the interface?</li>
+                        <li>Is the hole working correctly?</li>
+                        <li>Is the text legible and well positioned?</li>
+                        <li>Are the shapes properly grouped?</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title">💾 Export for Printing (3 min)</h2>
+            
+            <ol class="step-list">
+                <li>Click "Export" in the top right corner</li>
+                <li>Select <strong>.STL</strong> format (standard format for 3D printing)</li>
+                <li>Save the file to your computer</li>
+                <li>Give it a descriptive filename (e.g., "keychain-name.stl")</li>
+            </ol>
+            
+            <div class="info-box">
+                <div class="info-title">📁 About STL Files</div>
+                <p>STL (STereoLithography) is the universal format for 3D printing. It stores your object's surface as a mesh of triangles that the printer can interpret.</p>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title">🎓 Conclusion and Next Steps (2 min)</h2>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">Recap</h3>
+                <ul>
+                    <li>We created basic 3D shapes</li>
+                    <li>We used holes to subtract material</li>
+                    <li>We added personalized text</li>
+                    <li>We learned about raised and recessed relief</li>
+                    <li>We exported a file ready for printing</li>
+                </ul>
+            </div>
+            
+            <div class="tip-box">
+                <div class="tip-title">🚀 To Continue Learning</div>
+                <ul>
+                    <li>Try more complex shapes in Tinkercad</li>
+                    <li>Explore the community design library</li>
+                    <li>Try creating functional objects (holders, organizers, etc.)</li>
+                    <li>Join 2h or 4h workshops to learn about printing and advanced projects</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title">📚 Useful Resources</h2>
+            <ul>
+                <li><strong>Tinkercad:</strong> tinkercad.com</li>
+                <li><strong>Tutorials:</strong> Tinkercad Learning Center</li>
+                <li><strong>Community:</strong> Tinkercad Gallery for inspiration</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

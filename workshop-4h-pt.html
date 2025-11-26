@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workshop 4h - Badge Personalizado em Onshape</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #2d3748;
+            background: #f7fafc;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .duration-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            margin-top: 10px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: -30px auto 40px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            padding: 40px;
+        }
+        
+        .back-link {
+            display: inline-block;
+            color: #667eea;
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        .subsection {
+            margin: 25px 0;
+        }
+        
+        .subsection-title {
+            color: #2d3748;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .step-list {
+            list-style: none;
+            counter-reset: step-counter;
+        }
+        
+        .step-list li {
+            counter-increment: step-counter;
+            margin-bottom: 15px;
+            padding-left: 40px;
+            position: relative;
+        }
+        
+        .step-list li:before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #667eea;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+        
+        .info-box {
+            background: #ebf4ff;
+            border-left: 4px solid #4299e1;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .tip-box {
+            background: #faf089;
+            border-left: 4px solid #ecc94b;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .warning-box {
+            background: #fed7d7;
+            border-left: 4px solid #fc8181;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .success-box {
+            background: #c6f6d5;
+            border-left: 4px solid #68d391;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .tip-title, .info-title, .warning-title, .success-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .checklist {
+            list-style: none;
+        }
+        
+        .checklist li {
+            padding: 10px;
+            margin: 8px 0;
+            background: #f7fafc;
+            border-radius: 5px;
+            padding-left: 40px;
+            position: relative;
+        }
+        
+        .checklist li:before {
+            content: "☐";
+            position: absolute;
+            left: 12px;
+            font-size: 1.3em;
+            color: #667eea;
+        }
+        
+        ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+        
+        ul li {
+            margin: 8px 0;
+        }
+        
+        .timeline {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .timeline-item {
+            margin: 10px 0;
+            padding: 10px;
+            border-left: 3px solid #667eea;
+            padding-left: 15px;
+        }
+        
+        .timeline-time {
+            font-weight: 600;
+            color: #667eea;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .feature-card {
+            background: #f7fafc;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid #667eea;
+        }
+        
+        @media (max-width: 768px) {
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media print {
+            .back-link { display: none; }
+            .container { box-shadow: none; margin-top: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🖨️ Workshop Avançado de Impressão 3D</h1>
+        <p>Criar um Badge Personalizado em Onshape</p>
+        <div class="duration-badge">⏱️ Duração: 4 Horas</div>
+    </div>
+    
+    <div class="container">
+        <a href="index.html" class="back-link">← Voltar à seleção</a>
+        
+        <div class="section">
+            <h2 class="section-title">📋 Visão Geral do Workshop</h2>
+            <p>Neste workshop intensivo de 4 horas, vais criar um badge personalizado profissional usando o Onshape, uma plataforma CAD profissional baseada na cloud. Este projeto combina modelação parametrizada, design funcional e preparação completa para impressão 3D.</p>
+            
+            <div class="info-box">
+                <div class="info-title">🎯 Objetivos de Aprendizagem</div>
+                <ul>
+                    <li>Dominar ferramentas CAD profissionais no Onshape</li>
+                    <li>Criar designs parametrizados e editáveis</li>
+                    <li>Aplicar constraints e relações geométricas</li>
+                    <li>Integrar texto 3D e elementos decorativos</li>
+                    <li>Preparar ficheiros profissionais para impressão</li>
+                    <li>Compreender todo o fluxo de trabalho de impressão 3D</li>
+                </ul>
+            </div>
+            
+            <div class="success-box">
+                <div class="success-title">✨ Resultado Final</div>
+                <p>No final deste workshop, terás criado um badge personalizado com:</p>
+                <ul>
+                    <li>Nome ou identificação em relevo</li>
+                    <li>Logo ou símbolo personalizado</li>
+                    <li>Sistema de fixação (clipe ou pin)</li>
+                    <li>Design profissional pronto para impressão</li>
+                </ul>
+            </div>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <span class="timeline-time">0-15 min:</span> Preparação e introdução ao Onshape
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-time">15-45 min:</span> Fundamentos do Onshape
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-time">45-90 min:</span> INTERVALO (15 min) + Modelação do badge base
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-time">90-180 min:</span> Adicionar detalhes e personalização
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-time">180-210 min:</span> INTERVALO (15 min) + Sistema de fixação
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-time">210-230 min:</span> Preparação no Slicer
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-time">230-240 min:</span> Conclusão e showcase
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title">⚙️ Preparação (15 min)</h2>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">Checklist do Formador</h3>
+                <ul class="checklist">
+                    <li>Computadores com acesso à internet (Onshape é online)</li>
+                    <li>Contas Onshape Education criadas ou preparadas</li>
+                    <li>Software Slicer instalado</li>
+                    <li>Exemplos de badges impressos</li>
+                    <li>Diferentes tipos de sistemas de fixação (clipes, pins)</li>
+                    <li>Projetor para demonstração</li>
+                </ul>
+            </div>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">Configuração Inicial dos Participantes</h3>
+                <ol class="step-list">
+                    <li>Aceder a <strong>onshape.com</strong></li>
+                    <li>Criar conta Education gratuita (ou fazer login)</li>
+                    <li>Clicar em "Create" → "Document"</li>
+                    <li>Dar nome ao projeto: "Badge Pessoal - [Teu Nome]"</li>
+                </ol>
+            </div>
+            
+            <div class="info-box">
+                <div class="info-title">🔧 Porquê Onshape?</div>
+                <p>O Onshape é uma plataforma CAD profissional que oferece:</p>
+                <ul>
+                    <li><strong>Cloud-based:</strong> Funciona em qualquer computador sem instalação</li>
+                    <li><strong>Colaboração:</strong> Múltiplas pessoas podem trabalhar simultaneamente</li>
+                    <li><strong>Versionamento:</strong> Histórico completo de todas as alterações</li>
+                    <li><strong>Profissional:</strong> Usado em indústria real</li>
+                    <li><strong>Gratuito:</strong> Versão Education completamente gratuita</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title">🎨 Fundamentos do Onshape (30 min)</h2>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">Interface e Navegação (10 min)</h3>
+                
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <strong>🖱️ Controlos do Rato</strong>
+                        <ul>
+                            <li>Rodar: Botão central</li>
+                            <li>Mover: Botão central + Shift</li>
+                            <li>Zoom: Roda do rato</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <strong>👁️ Vista</strong>
+                        <ul>
+                            <li>Cubo de vista: Canto sup. direito</li>
+                            <li>Isométrica: Vista padrão</li>
+                            <li>Planos: Top, Front, Right</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <strong>⚙️ Barra de Ferramentas</strong>
+                        <ul>
+                            <li>Sketch: Desenho 2D</li>
+                            <li>Extrude: Criar volume</li>
+                            <li>Fillet: Arredondar arestas</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <strong>📐 Feature List</strong>
+                        <ul>
+                            <li>Histórico de operações</li>
+                            <li>Editar qualquer passo</li>
+                            <li>Design paramétrico</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="tip-box">
+                    <div class="tip-title">💡 Filosofia do Onshape</div>
+                    <p>No Onshape trabalhas em <strong>etapas</strong>:</p>
+                    <ol>
+                        <li><strong>Sketch:</strong> Desenhas o perfil 2D</li>
+                        <li><strong>Extrude:</strong> Dás volume ao desenho</li>
+                        <li><strong>Modificar:</strong> Refinamentos e detalhes</li>
+                    </ol>
+                    <p>Cada etapa fica no histórico e pode ser editada a qualquer momento!</p>
+                </div>
+            </div>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">Exercício Rápido: Criar um Cubo (20 min)</h3>
+                <p>Antes de começar o badge, vamos praticar o fluxo básico:</p>
+                
+                <ol class="step-list">
+                    <li><strong>Criar Sketch</strong>
+                        <ul>
+                            <li>Clicar no ícone "Sketch" na barra de ferramentas</li>
+                            <li>Selecionar o plano "Top" (azul)</li>
+                            <li>Estás agora em modo de desenho 2D</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Desenhar Retângulo</strong>
+                        <ul>
+                            <li>Selecionar ferramenta "Rectangle" (R)</li>
+                            <li>Clicar no centro (origem) e arrastar</li>
+                            <li>Soltar para criar retângulo</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Adicionar Dimensões (Constraints)</strong>
+                        <ul>
+                            <li>Selecionar ferramenta "Dimension" (D)</li>
+                            <li>Clicar numa linha horizontal, escrever valor (ex: 50mm)</li>
+                            <li>Clicar numa linha vertical, escrever valor (ex: 50mm)</li>
+                            <li>O retângulo ajusta-se automaticamente</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Finalizar Sketch</strong>
+                        <ul>
+                            <li>Clicar no ✓ verde no canto superior direito</li>
+                            <li>Voltas à vista 3D com o teu desenho no plano</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Extrude (Dar Volume)</strong>
+                        <ul>
+                            <li>Clicar no ícone "Extrude"</li>
+                            <li>Clicar no retângulo que desenhaste</li>
+                            <li>Arrastar a seta verde para cima ou escrever altura (ex: 50mm)</li>
+                            <li>Clicar em ✓ verde</li>
+                            <li>Agora tens um cubo 3D!</li>
+                        </ul>
+                    </li>
+                </ol>
+                
+                <div class="success-box">
+                    <div class="success-title">✅ Conceitos Aprendidos</div>
+                    <ul>
+                        <li>Sketch: Desenho 2D no plano</li>
+                        <li>Constraints: Dimensões que controlam o desenho</li>
+                        <li>Extrude: Transformar 2D em 3D</li>
+                        <li>Paramétrico: Podes voltar atrás e mudar qualquer valor!</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title">🏷️ PARTE 1: Badge Base (45 min)</h2>
+            
+            <div class="tip-box">
+                <div class="tip-title">🎯 Objetivo desta Parte</div>
+                Criar a forma base do badge com dimensões profissionais e cantos arredondados.
+            </div>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">Planeamento do Design (5 min)</h3>
+                <p><strong>Dimensões típicas de um badge:</strong></p>
+                <ul>
+                    <li>Largura: 70-90mm</li>
+                    <li>Altura: 50-70mm</li>
+                    <li>Espessura: 3-5mm (resistente mas não pesado)</li>
+                </ul>
+                
+                <div class="info-box">
+                    <div class="info-title">💭 Pensar Como Designer</div>
+                    <p>Antes de começar, os participantes devem decidir:</p>
+                    <ul>
+                        <li>Forma: Retangular, oval, ou personalizada?</li>
+                        <li>Orientação: Horizontal ou vertical?</li>
+                        <li>Estilo: Minimalista ou decorativo?</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">Criar a Forma Base (40 min)</h3>
+                
+                <ol class="step-list">
+                    <li><strong>Novo Sketch no Plano Top</strong>
+                        <ul>
+                            <li>Criar novo documento se não tiveres um aberto</li>
+                            <li>Clicar em "Sketch" → Selecionar plano "Top"</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Desenhar Retângulo Centrado</strong>
+                        <ul>
+                            <li>Ferramenta "Rectangle" (R)</li>
+                            <li>Clicar na origem (centro) e arrastar</li>
+                            <li>Ou usar "Center Rectangle" para facilitar</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Adicionar Dimensões Precisas</strong>
+                        <ul>
+                            <li>Ferramenta "Dimension" (D)</li>
+                            <li>Definir largura: 80mm</li>
+                            <li>Definir altura: 60mm</li>
+                            <li>Estas dimensões serão paramétricas - podes mudar depois!</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Arredondar Cantos (Fillet 2D)</strong>
+                        <ul>
+                            <li>Ferramenta "Fillet" no menu Sketch</li>
+                            <li>Clicar num canto do retângulo</li>
+                            <li>Definir raio: 10mm (ajustar ao gosto)</li>
+                            <li>Repetir para todos os 4 cantos</li>
+                            <li>Cantos arredondados dão aspeto profissional</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Finalizar Sketch</strong>
+                        <ul>
+                            <li>Verificar que o perfil está completamente fechado (verde)</li>
+                            <li>Clicar em ✓ para sair do modo Sketch</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Extrude para Criar Volume</strong>
+                        <ul>
+                            <li>Selecionar ferramenta "Extrude"</li>
+                            <li>Clicar no perfil do badge</li>
+                            <li>Definir espessura: 4mm</li>
+                            <li>Verificar que está em modo "New" (criar novo sólido)</li>
+                            <li>Clicar em ✓</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Arredondar Arestas 3D (Opcional mas Recomendado)</strong>
+                        <ul>
+                            <li>Ferramenta "Fillet" (3D, diferente do 2D)</li>
+                            <li>Selecionar as arestas superiores do badge</li>
+                            <li>Definir raio pequeno: 0.5-1mm</li>
+                            <li>Isto elimina cantos vivos e dá acabamento profissional</li>
+                        </ul>
+                    </li>
+                </ol>
+                
+                <div class="warning-box">
+                    <div class="warning-title">⚠️ Pontos de Verificação</div>
+                    <p>Circular pela sala e verificar que todos:</p>
+                    <ul>
+                        <li>Têm um sólido 3D bem formado</li>
+                        <li>Conseguem ver o histórico na Feature List</li>
+                        <li>Compreendem que podem editar qualquer passo</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section" style="background: #fffbeb; padding: 20px; border-radius: 10px; margin: 30px 0;">
+            <h2 style="text-align: center; color: #92400e;">☕ INTERVALO - 15 minutos</h2>
+            <p style="text-align: center; margin-top: 10px;">Bom momento para esticar, tomar café e ver os trabalhos uns dos outros!</p>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title">✍️ PARTE 2: Personalização com Texto e Símbolos (90 min)</h2>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">Adicionar Texto em Relevo (40 min)</h3>
+                
+                <ol class="step-list">
+                    <li><strong>Criar Novo Sketch na Face Superior</strong>
+                        <ul>
+                            <li>Clicar em "Sketch"</li>
+                            <li>Selecionar a face de cima do badge (ficará azul)</li>
+                            <li>Estás agora a desenhar "em cima" do badge</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Adicionar Texto</strong>
+                        <ul>
+                            <li>Ferramenta "Text" (ícone T)</li>
+                            <li>Clicar na face para posicionar</li>
+                            <li>Escrever nome ou texto desejado</li>
+                            <li>Ajustar fonte (escolher fonte clara e legível)</li>
+                            <li>Definir tamanho apropriado (começar com 15-20mm de altura)</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Posicionar o Texto</strong>
+                        <ul>
+                            <li>Usar ferramenta "Move" para ajustar posição</li>
+                            <li>Ou adicionar constraints de distância</li>
+                            <li>Centrar horizontalmente se desejado</li>
+                            <li>Posicionar verticalmente com espaço para logo</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Finalizar Sketch do Texto</strong>
+                        <ul>
+                            <li>Clicar em ✓</li>
+                            <li>O texto aparece como contorno na superfície</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Extrude o Texto em Relevo</strong>
+                        <ul>
+                            <li>Ferramenta "Extrude"</li>
+                            <li>Selecionar o texto</li>
+                            <li>IMPORTANTE: Mudar de "New" para "Add"</li>
+                            <li>Definir altura de relevo: 1-2mm</li>
+                            <li>Clicar em ✓</li>
+                            <li>O texto está agora em 3D saliente!</li>
+                        </ul>
+                    </li>
+                </ol>
+                
+                <div class="tip-box">
+                    <div class="tip-title">💡 Dica: Alto vs Baixo Relevo</div>
+                    <ul>
+                        <li><strong>Alto Relevo (Add):</strong> Texto sai para fora - mais visível, mais material</li>
+                        <li><strong>Baixo Relevo (Remove):</strong> Texto gravado - elegante, menos propenso a partir</li>
+                        <li>Experimenta ambos e vê qual preferes!</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">Adicionar Logo ou Símbolo (50 min)</h3>
+                
+                <p><strong>Opção 1: Desenhar Formas Simples</strong></p>
+                <ol class="step-list">
+                    <li>Criar novo Sketch na face superior</li>
+                    <li>Usar ferramentas de desenho:
+                        <ul>
+                            <li>Circle: Para círculos</li>
+                            <li>Polygon: Para estrelas, hexágonos, etc.</li>
+                            <li>Line: Para desenhos personalizados</li>
+                        </ul>
+                    </li>
+                    <li>Combinar formas para criar símbolo único</li>
+                    <li>Extrude em Add ou Remove</li>
+                </ol>
+                
+                <p><strong>Opção 2: Importar SVG (Mais Avançado)</strong></p>
+                <ol class="step-list">
+                    <li>Ter um ficheiro SVG do logo (pode encontrar em sites como flaticon.com)</li>
+                    <li>No Sketch, clicar em "Insert" → "DXF or DWG"</li>
+                    <li>Upload do ficheiro SVG</li>
+                    <li>Ajustar escala e posição</li>
+                    <li>Extrude para criar relevo</li>
+                </ol>
+                
+                <div class="info-box">
+                    <div class="info-title">🎨 Ideias de Personalização</div>
+                    <ul>
+                        <li><strong>Profissional:</strong> Iniciais, cargo, empresa</li>
+                        <li><strong>Educação:</strong> Escola, turma, número</li>
+                        <li><strong>Eventos:</strong> Nome do evento, data, logo</li>
+                        <li><strong>Hobby:</strong> Símbolos de interesses (música, desporto, etc.)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="warning-box">
+                <div class="warning-title">⚠️ Checkpoint de Design</div>
+                <p>Antes de avançar, verificar:</p>
+                <ul class="checklist">
+                    <li>Texto está legível e bem posicionado?</li>
+                    <li>Relevo tem altura apropriada (1-2mm)?</li>
+                    <li>Logo/símbolo está centrado e balanceado?</li>
+                    <li>Design não está demasiado carregado?</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="section" style="background: #fffbeb; padding: 20px; border-radius: 10px; margin: 30px 0;">
+            <h2 style="text-align: center; color: #92400e;">☕ INTERVALO - 15 minutos</h2>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title">📎 PARTE 3: Sistema de Fixação (30 min)</h2>
+            
+            <div class="info-box">
+                <div class="info-title">🔧 Opções de Fixação</div>
+                <p>Vamos criar um sistema de fixação funcional. Escolhe uma opção:</p>
+            </div>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">Opção A: Clipe de Pressão (Recomendado)</h3>
+                
+                <ol class="step-list">
+                    <li><strong>Sketch na Face Traseira</strong>
+                        <ul>
+                            <li>Rodar o badge (ou mudar vista)</li>
+                            <li>Criar Sketch na face de trás</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Desenhar Base do Clipe</strong>
+                        <ul>
+                            <li>Retângulo pequeno centrado: 15mm x 8mm</li>
+                            <li>Posicionar no terço superior do badge</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Extrude a Base</strong>
+                        <ul>
+                            <li>Extrude em "Add"</li>
+                            <li>Altura: 3mm</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Criar Ranhura para Clipe</strong>
+                        <ul>
+                            <li>Novo Sketch na face de cima da base</li>
+                            <li>Retângulo: 12mm x 1.5mm (fenda estreita)</li>
+                            <li>Extrude em "Remove" atravessando toda a base</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Arredondar Arestas</strong>
+                        <ul>
+                            <li>Fillet nas arestas vivas</li>
+                            <li>Raio: 0.5mm</li>
+                        </ul>
+                    </li>
+                </ol>
+                
+                <div class="tip-box">
+                    <div class="tip-title">💡 Como Funciona</div>
+                    <p>A fenda permite inserir um clipe de roupa ou clipe de badge comercial. Funcional e simples!</p>
+                </div>
+            </div>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">Opção B: Sistema de Pin</h3>
+                
+                <ol class="step-list">
+                    <li><strong>Criar Dois Círculos Pequenos</strong>
+                        <ul>
+                            <li>Sketch na face traseira</li>
+                            <li>Dois círculos: diâmetro 3mm cada</li>
+                            <li>Distância entre centros: 15-20mm</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Extrude os Orifícios</strong>
+                        <ul>
+                            <li>Extrude em "Remove"</li>
+                            <li>Profundidade: 2mm (não atravessar completamente)</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Usar com Pin de Segurança</strong>
+                        <ul>
+                            <li>Estes orifícios permitem fixar um pin de segurança</li>
+                            <li>Mais permanente que o clipe</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title">⚙️ PARTE 4: Preparação para Impressão (20 min)</h2>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">Exportar do Onshape (5 min)</h3>
+                
+                <ol class="step-list">
+                    <li>Clicar com botão direito no "Part Studio" à esquerda</li>
+                    <li>Selecionar "Export"</li>
+                    <li>Formato: <strong>STL</strong></li>
+                    <li>Unidades: Millimeters</li>
+                    <li>Resolution: Fine</li>
+                    <li>Download do ficheiro</li>
+                </ol>
+            </div>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">Preparar no Slicer (15 min)</h3>
+                
+                <ol class="step-list">
+                    <li><strong>Carregar no Slicer</strong>
+                        <ul>
+                            <li>Abrir Cura/PrusaSlicer</li>
+                            <li>Import ficheiro STL</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Orientação</strong>
+                        <ul>
+                            <li>Badge deve estar com face principal para cima</li>
+                            <li>Face traseira (com clipe) para baixo</li>
+                            <li>Assim o texto sai com melhor qualidade</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Configurações Recomendadas</strong>
+                        <ul>
+                            <li><strong>Layer Height:</strong> 0.2mm (qualidade normal)</li>
+                            <li><strong>Supports:</strong> Provavelmente não necessário</li>
+                            <li><strong>Adhesion:</strong> Brim (recomendado)</li>
+                            <li><strong>Infill:</strong> 20% é suficiente</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Slice e Verificar</strong>
+                        <ul>
+                            <li>Clicar em "Slice"</li>
+                            <li>Verificar tempo estimado</li>
+                            <li>Navegar pelas camadas para verificar</li>
+                            <li>Prestar atenção especial ao texto</li>
+                        </ul>
+                    </li>
+                </ol>
+                
+                <div class="success-box">
+                    <div class="success-title">✅ Pronto para Imprimir!</div>
+                    <p>Tempo estimado de impressão: 1-2 horas</p>
+                    <p>Material necessário: 10-20g de PLA</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title">🎓 Conclusão e Showcase (10 min)</h2>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">Galeria de Projetos</h3>
+                <p>Cada participante mostra brevemente o seu design:</p>
+                <ul>
+                    <li>Partilhar ecrã ou projetar</li>
+                    <li>Explicar escolhas de design</li>
+                    <li>Mostrar detalhes especiais</li>
+                    <li>Receber feedback do grupo</li>
+                </ul>
+            </div>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">Aprendizagens Principais</h3>
+                <ul>
+                    <li>✅ Workflow completo CAD profissional</li>
+                    <li>✅ Design paramétrico editável</li>
+                    <li>✅ Texto e gráficos 3D</li>
+                    <li>✅ Componentes funcionais (clipe)</li>
+                    <li>✅ Preparação para impressão</li>
+                </ul>
+            </div>
+            
+            <div class="tip-box">
+                <div class="tip-title">🚀 Próximos Passos</div>
+                <ul>
+                    <li><strong>Imprimir:</strong> Agenda tempo na impressora 3D</li>
+                    <li><strong>Iterar:</strong> Voltar ao Onshape e melhorar design</li>
+                    <li><strong>Partilhar:</strong> Exportar link público do Onshape</li>
+                    <li><strong>Expandir:</strong> Aplicar técnicas a outros projetos</li>
+                </ul>
+            </div>
+            
+            <div class="info-box">
+                <div class="info-title">📤 Partilhar Projetos</div>
+                <p>No Onshape, podes facilmente partilhar:</p>
+                <ol>
+                    <li>Clicar em "Share" no canto superior direito</li>
+                    <li>Copiar link público</li>
+                    <li>Outras pessoas podem ver (e comentar se deres permissão)</li>
+                    <li>Excelente para portfolio!</li>
+                </ol>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title">📚 Recursos e Referências</h2>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">Software</h3>
+                <ul>
+                    <li><strong>Onshape:</strong> onshape.com (conta Education gratuita)</li>
+                    <li><strong>Slicer:</strong> UltiMaker Cura ou PrusaSlicer (grátis)</li>
+                </ul>
+            </div>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">Aprendizagem Contínua</h3>
+                <ul>
+                    <li><strong>Onshape Learning Center:</strong> Tutoriais oficiais</li>
+                    <li><strong>YouTube:</strong> Muitos tutoriais de Onshape</li>
+                    <li><strong>Comunidades:</strong> Reddit r/3Dprinting, fóruns Onshape</li>
+                </ul>
+            </div>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">Inspiração</h3>
+                <ul>
+                    <li><strong>Thingiverse:</strong> Modelos gratuitos para download</li>
+                    <li><strong>Printables:</strong> Comunidade Prusa de designs</li>
+                    <li><strong>GrabCAD:</strong> Modelos CAD profissionais</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title">🎯 Desafios Extra (Para Quem Terminar Cedo)</h2>
+            
+            <ol>
+                <li><strong>Versão Dupla Face:</strong> Adicionar design também na traseira</li>
+                <li><strong>Badge Rotativo:</strong> Criar duas partes que se encaixam</li>
+                <li><strong>Com Espaço para Foto:</strong> Criar moldura para inserir fotografia</li>
+                <li><strong>Multi-material:</strong> Design preparado para impressão em duas cores</li>
+                <li><strong>Versão Mini:</strong> Escalar para fazer um porta-chaves</li>
+            </ol>
+        </div>
+    </div>
+</body>
+</html>

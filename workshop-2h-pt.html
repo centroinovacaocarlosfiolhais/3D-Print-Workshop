@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workshop 2h - Impressão 3D: Tinkercad e Slicer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #2d3748;
+            background: #f7fafc;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .duration-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            margin-top: 10px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: -30px auto 40px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            padding: 40px;
+        }
+        
+        .back-link {
+            display: inline-block;
+            color: #667eea;
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        .subsection {
+            margin: 25px 0;
+        }
+        
+        .subsection-title {
+            color: #2d3748;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .step-list {
+            list-style: none;
+            counter-reset: step-counter;
+        }
+        
+        .step-list li {
+            counter-increment: step-counter;
+            margin-bottom: 15px;
+            padding-left: 40px;
+            position: relative;
+        }
+        
+        .step-list li:before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #667eea;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+        
+        .info-box {
+            background: #ebf4ff;
+            border-left: 4px solid #4299e1;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .tip-box {
+            background: #faf089;
+            border-left: 4px solid #ecc94b;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .warning-box {
+            background: #fed7d7;
+            border-left: 4px solid #fc8181;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .tip-title, .info-title, .warning-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .checklist {
+            list-style: none;
+        }
+        
+        .checklist li {
+            padding: 10px;
+            margin: 8px 0;
+            background: #f7fafc;
+            border-radius: 5px;
+            padding-left: 40px;
+            position: relative;
+        }
+        
+        .checklist li:before {
+            content: "☐";
+            position: absolute;
+            left: 12px;
+            font-size: 1.3em;
+            color: #667eea;
+        }
+        
+        ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+        
+        ul li {
+            margin: 8px 0;
+        }
+        
+        .timeline {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .timeline-item {
+            margin: 10px 0;
+            padding: 10px;
+            border-left: 3px solid #667eea;
+            padding-left: 15px;
+        }
+        
+        .timeline-time {
+            font-weight: 600;
+            color: #667eea;
+        }
+        
+        @media print {
+            .back-link { display: none; }
+            .container { box-shadow: none; margin-top: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🖨️ Workshop de Impressão 3D</h1>
+        <p>Da Modelação à Preparação para Impressão</p>
+        <div class="duration-badge">⏱️ Duração: 2 Horas</div>
+    </div>
+    
+    <div class="container">
+        <a href="index.html" class="back-link">← Voltar à seleção</a>
+        
+        <div class="section">
+            <h2 class="section-title">📋 Visão Geral do Workshop</h2>
+            <p>Neste workshop de 2 horas, vais dominar o processo completo desde a modelação 3D até à preparação para impressão. Vais criar um objeto no Tinkercad e aprender a prepará-lo no software Slicer para garantir uma impressão bem-sucedida.</p>
+            
+            <div class="info-box">
+                <div class="info-title">🎯 Objetivos de Aprendizagem</div>
+                <ul>
+                    <li>Criar objetos 3D personalizados no Tinkercad</li>
+                    <li>Compreender o processo de preparação para impressão</li>
+                    <li>Conhecer as definições essenciais do Slicer</li>
+                    <li>Identificar quando usar suportes e adesão</li>
+                    <li>Entender o impacto da qualidade de impressão</li>
+                </ul>
+            </div>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <span class="timeline-time">0-10 min:</span> Preparação e introdução
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-time">10-20 min:</span> Conceitos básicos de impressão 3D
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-time">20-65 min:</span> Modelação no Tinkercad
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-time">65-110 min:</span> Preparação no Slicer
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-time">110-120 min:</span> Conclusão e Q&A
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title">⚙️ Preparação (10 min)</h2>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">Checklist do Formador</h3>
+                <ul class="checklist">
+                    <li>Computadores com Tinkercad (online) e Slicer instalado</li>
+                    <li>Ficheiros STL de exemplo para demonstração</li>
+                    <li>Projetor para demonstração em tempo real</li>
+                    <li>Exemplos físicos de impressões (com e sem suportes)</li>
+                    <li>Exemplos de diferentes qualidades de impressão</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title">🎨 Introdução à Impressão 3D (10 min)</h2>
+            
+            <div class="info-box">
+                <div class="info-title">💡 Processo Completo de Impressão 3D</div>
+                <ol>
+                    <li><strong>Modelação:</strong> Criar o design 3D (Tinkercad, Onshape, etc.)</li>
+                    <li><strong>Exportação:</strong> Guardar como ficheiro STL</li>
+                    <li><strong>Slicing:</strong> Converter o modelo em camadas (Slicer)</li>
+                    <li><strong>Impressão:</strong> Enviar para a impressora 3D</li>
+                    <li><strong>Pós-processamento:</strong> Remover suportes e acabamento</li>
+                </ol>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title">🛠️ PARTE 1: Modelação no Tinkercad (45 min)</h2>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">Configuração Inicial (5 min)</h3>
+                <ol class="step-list">
+                    <li>Aceder a <strong>tinkercad.com</strong></li>
+                    <li>Criar conta ou fazer login</li>
+                    <li>Clicar em "Criar novo design"</li>
+                </ol>
+            </div>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">Navegação Básica (5 min)</h3>
+                <ul>
+                    <li><strong>Rodar:</strong> Botão direito do rato + arrastar</li>
+                    <li><strong>Zoom:</strong> Roda do rato</li>
+                    <li><strong>Mover:</strong> Roda pressionada + arrastar</li>
+                    <li><strong>Vistas:</strong> Usar o cubo de vista no canto</li>
+                </ul>
+            </div>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">Exercício: Criar um Suporte para Telemóvel (35 min)</h3>
+                
+                <div class="tip-box">
+                    <div class="tip-title">💡 Porquê um Suporte de Telemóvel?</div>
+                    Este projeto é ideal porque:
+                    <ul>
+                        <li>É um objeto funcional e útil</li>
+                        <li>Permite explorar conceitos de ângulos e suportes</li>
+                        <li>Tem desafios interessantes de design</li>
+                        <li>Introduz o pensamento sobre orientação de impressão</li>
+                    </ul>
+                </div>
+                
+                <ol class="step-list">
+                    <li><strong>Criar a base do suporte</strong>
+                        <ul>
+                            <li>Arrastar uma "Caixa" para a área de trabalho</li>
+                            <li>Ajustar para criar uma base retangular e achatada</li>
+                            <li>Dar espessura suficiente para estabilidade</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Criar a parede de apoio</strong>
+                        <ul>
+                            <li>Adicionar outra "Caixa" para servir como parede traseira</li>
+                            <li>Posicionar verticalmente na extremidade da base</li>
+                            <li>Ajustar altura para acomodar um telemóvel</li>
+                            <li>Usar a ferramenta de rotação para criar ângulo de apoio (cerca de 70-80°)</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Adicionar ranhura para o telemóvel</strong>
+                        <ul>
+                            <li>Arrastar uma "Caixa" e transformá-la em "Orifício"</li>
+                            <li>Posicionar e ajustar para criar a ranhura onde o telemóvel assenta</li>
+                            <li>Ajustar profundidade e largura</li>
+                            <li>Agrupar com a base</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Criar abertura para o cabo</strong>
+                        <ul>
+                            <li>Usar um "Cilindro" ou "Caixa" como orifício</li>
+                            <li>Posicionar na parte inferior para permitir carregar</li>
+                            <li>Ajustar tamanho apropriado para cabo USB</li>
+                            <li>Agrupar com o resto do modelo</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Personalizar com texto ou símbolos</strong>
+                        <ul>
+                            <li>Adicionar texto com nome ou ícones decorativos</li>
+                            <li>Experimentar alto ou baixo relevo</li>
+                            <li>Posicionar em superfícies visíveis</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Verificação final</strong>
+                        <ul>
+                            <li>Rodar o objeto e verificar todos os ângulos</li>
+                            <li>Confirmar que todas as partes estão bem agrupadas</li>
+                            <li>Verificar espessuras mínimas</li>
+                            <li>Exportar como STL</li>
+                        </ul>
+                    </li>
+                </ol>
+                
+                <div class="warning-box">
+                    <div class="warning-title">⚠️ Pontos de Atenção</div>
+                    <ul>
+                        <li>Manter paredes com pelo menos 2-3mm de espessura</li>
+                        <li>Verificar que o ângulo não é demasiado acentuado (pode precisar suportes)</li>
+                        <li>Confirmar que a base é suficientemente larga para estabilidade</li>
+                        <li>Testar mentalmente se um telemóvel real caberia</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title">⚙️ PARTE 2: Preparação no Slicer (45 min)</h2>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">O que é um Slicer? (5 min)</h3>
+                <p>O Slicer é o software que converte o teu modelo 3D em instruções que a impressora consegue seguir. Ele "corta" o modelo em centenas ou milhares de camadas finas e gera o caminho que o bico da impressora deve seguir.</p>
+                
+                <div class="info-box">
+                    <div class="info-title">📦 Software Slicer Comum</div>
+                    <ul>
+                        <li><strong>UltiMaker Cura:</strong> Gratuito, fácil de usar, muito popular</li>
+                        <li><strong>PrusaSlicer:</strong> Gratuito, excelente para impressoras Prusa</li>
+                        <li><strong>Bambu Studio:</strong> Para impressoras Bambu Lab</li>
+                    </ul>
+                    <p><em>Neste workshop vamos usar [indicar qual está instalado]</em></p>
+                </div>
+            </div>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">Carregar o Modelo (5 min)</h3>
+                <ol class="step-list">
+                    <li>Abrir o Slicer no computador</li>
+                    <li>Clicar em "Abrir ficheiro" ou arrastar o ficheiro STL</li>
+                    <li>O modelo aparece na plataforma virtual de impressão</li>
+                    <li>Observar a orientação inicial do modelo</li>
+                </ol>
+            </div>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">Conceitos Essenciais do Slicer (30 min)</h3>
+                
+                <h4 style="color: #667eea; margin-top: 25px; margin-bottom: 15px;">1. Suportes (Supports) - 10 min</h4>
+                
+                <div class="info-box">
+                    <div class="info-title">🏗️ O que são Suportes?</div>
+                    <p>Suportes são estruturas temporárias que a impressora cria para segurar partes do objeto que "flutuam no ar". São como andaimes de construção - necessários durante a impressão mas removidos depois.</p>
+                </div>
+                
+                <p><strong>Quando usar suportes:</strong></p>
+                <ul>
+                    <li><strong>Ângulos maiores que 45°:</strong> Se uma parte tem inclinação superior a 45°, normalmente precisa suporte</li>
+                    <li><strong>Saliências:</strong> Partes que se projetam sem nada por baixo</li>
+                    <li><strong>Pontes muito longas:</strong> Distâncias horizontais sem apoio</li>
+                </ul>
+                
+                <p><strong>Demonstração prática:</strong></p>
+                <ol class="step-list">
+                    <li>Mostrar o modelo do suporte de telemóvel</li>
+                    <li>Ativar visualização de suportes no Slicer</li>
+                    <li>Explicar onde aparecem e porquê</li>
+                    <li>Rodar o modelo para mostrar diferentes orientações</li>
+                    <li>Demonstrar como mudar orientação pode eliminar suportes</li>
+                </ol>
+                
+                <div class="tip-box">
+                    <div class="tip-title">💡 Dica de Design</div>
+                    Sempre que possível, design os teus objetos para minimizar ou eliminar suportes:
+                    <ul>
+                        <li>Pensa na orientação desde o início</li>
+                        <li>Usa ângulos até 45° quando possível</li>
+                        <li>Considera dividir objetos complexos em partes</li>
+                    </ul>
+                </div>
+                
+                <h4 style="color: #667eea; margin-top: 25px; margin-bottom: 15px;">2. Adesão à Plataforma (Bed Adhesion) - 10 min</h4>
+                
+                <div class="info-box">
+                    <div class="info-title">📐 O que é Bed Adhesion?</div>
+                    <p>São estruturas extras na primeira camada que ajudam o objeto a aderir bem à plataforma de impressão, evitando que descole ou se mova durante a impressão.</p>
+                </div>
+                
+                <p><strong>Tipos de adesão:</strong></p>
+                <ul>
+                    <li><strong>Brim:</strong> Borda extra à volta da primeira camada
+                        <ul>
+                            <li>Aumenta área de contacto</li>
+                            <li>Fácil de remover</li>
+                            <li>Ideal para maioria dos objetos</li>
+                        </ul>
+                    </li>
+                    <li><strong>Raft:</strong> Plataforma completa por baixo do objeto
+                        <ul>
+                            <li>Máxima adesão</li>
+                            <li>Útil para objetos com base pequena</li>
+                            <li>Consome mais material</li>
+                            <li>Deixa marca na superfície inferior</li>
+                        </ul>
+                    </li>
+                    <li><strong>Skirt:</strong> Linha à volta (não toca no objeto)
+                        <ul>
+                            <li>Apenas para preparar o bico</li>
+                            <li>Não ajuda na adesão</li>
+                        </ul>
+                    </li>
+                </ul>
+                
+                <p><strong>Demonstração prática:</strong></p>
+                <ol class="step-list">
+                    <li>Mostrar cada tipo de adesão no Slicer</li>
+                    <li>Explicar quando usar cada um</li>
+                    <li>Mostrar exemplos físicos de peças impressas com cada tipo</li>
+                    <li>Demonstrar como remover brim vs raft</li>
+                </ol>
+                
+                <h4 style="color: #667eea; margin-top: 25px; margin-bottom: 15px;">3. Qualidade de Extrusão (Layer Height) - 10 min</h4>
+                
+                <div class="info-box">
+                    <div class="info-title">📏 O que é Layer Height?</div>
+                    <p>É a espessura de cada camada de material. Camadas mais finas = mais detalhe mas mais tempo. Camadas mais grossas = mais rápido mas menos detalhe.</p>
+                </div>
+                
+                <p><strong>Perfis comuns:</strong></p>
+                <ul>
+                    <li><strong>0.1mm - Alta qualidade:</strong>
+                        <ul>
+                            <li>Superfícies muito lisas</li>
+                            <li>Detalhes finos visíveis</li>
+                            <li>Tempo: Pode demorar 2-3x mais</li>
+                            <li>Usar para: Figuras, objetos decorativos</li>
+                        </ul>
+                    </li>
+                    <li><strong>0.2mm - Qualidade normal:</strong>
+                        <ul>
+                            <li>Equilíbrio ideal</li>
+                            <li>Boa aparência e tempo razoável</li>
+                            <li>Usar para: Maioria dos projetos</li>
+                        </ul>
+                    </li>
+                    <li><strong>0.3mm - Rascunho:</strong>
+                        <ul>
+                            <li>Impressão rápida</li>
+                            <li>Camadas visíveis</li>
+                            <li>Usar para: Protótipos, peças funcionais onde aparência não importa</li>
+                        </ul>
+                    </li>
+                </ul>
+                
+                <p><strong>Demonstração prática:</strong></p>
+                <ol class="step-list">
+                    <li>Mostrar o mesmo objeto com diferentes layer heights no Slicer</li>
+                    <li>Comparar tempo estimado de impressão</li>
+                    <li>Mostrar exemplos físicos de mesma peça em diferentes qualidades</li>
+                    <li>Deixar participantes sentirem a diferença nas superfícies</li>
+                </ol>
+                
+                <div class="tip-box">
+                    <div class="tip-title">⚖️ Escolher a Qualidade Certa</div>
+                    <p>Pergunta a fazer: "Isto é decorativo ou funcional?"</p>
+                    <ul>
+                        <li><strong>Decorativo:</strong> Vale a pena esperar por alta qualidade</li>
+                        <li><strong>Funcional:</strong> Qualidade normal ou rascunho poupa tempo</li>
+                        <li><strong>Protótipos:</strong> Sempre usar rascunho primeiro para testar</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">Preparar para Impressão (5 min)</h3>
+                <ol class="step-list">
+                    <li>Selecionar perfil da impressora</li>
+                    <li>Escolher material (PLA é o mais comum)</li>
+                    <li>Definir qualidade de impressão (layer height)</li>
+                    <li>Ativar suportes se necessário</li>
+                    <li>Escolher tipo de adesão (normalmente brim)</li>
+                    <li>Clicar em "Slice" para processar</li>
+                    <li>Verificar tempo e quantidade de material estimados</li>
+                    <li>Visualizar camada por camada (opcional)</li>
+                    <li>Exportar ficheiro G-code para cartão SD ou enviar para impressora</li>
+                </ol>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title">🎓 Conclusão e Próximos Passos (10 min)</h2>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">Recapitulação</h3>
+                <p><strong>Parte 1 - Tinkercad:</strong></p>
+                <ul>
+                    <li>Criámos um objeto funcional 3D</li>
+                    <li>Usámos sólidos e orifícios</li>
+                    <li>Adicionámos personalização</li>
+                </ul>
+                
+                <p><strong>Parte 2 - Slicer:</strong></p>
+                <ul>
+                    <li>Compreendemos quando usar suportes</li>
+                    <li>Aprendemos sobre adesão à plataforma</li>
+                    <li>Vimos o impacto da qualidade de extrusão</li>
+                </ul>
+            </div>
+            
+            <div class="warning-box">
+                <div class="warning-title">⚠️ Checklist Antes de Imprimir</div>
+                <ul class="checklist">
+                    <li>Modelo está bem posicionado na plataforma?</li>
+                    <li>Suportes estão ativados se necessário?</li>
+                    <li>Escolhi o tipo de adesão apropriado?</li>
+                    <li>Qualidade de impressão adequada ao objetivo?</li>
+                    <li>Tempo e material são aceitáveis?</li>
+                </ul>
+            </div>
+            
+            <div class="tip-box">
+                <div class="tip-title">🚀 Para Continuar</div>
+                <ul>
+                    <li>Experimenta imprimir o teu projeto</li>
+                    <li>Tenta diferentes orientações no Slicer</li>
+                    <li>Compara impressões com diferentes qualidades</li>
+                    <li>Participa no workshop de 4h para projetos mais avançados no Onshape</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title">📚 Recursos</h2>
+            <ul>
+                <li><strong>Modelação:</strong> tinkercad.com</li>
+                <li><strong>Slicer gratuito:</strong> UltiMaker Cura (ultimaker.com/software)</li>
+                <li><strong>Comunidade:</strong> Thingiverse, Printables para modelos gratuitos</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
